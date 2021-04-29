@@ -21,10 +21,11 @@ See how it is used in our game. TODO: add link
 
 These comonents are using React for now. But for the better performance I have plans to render them using canvas.
 
-- [ ] rotate device overlay
-- [ ] mobile controls
-- [ ] hotbar
-- [ ] 
+- [ ] Rotate device overlay
+- [ ] Touch controls
+- [ ] Hotbar
+- [ ] Waila
+- [ ] Wearable armor state (such as jetpacks engine state)
 
 ### Other
 
