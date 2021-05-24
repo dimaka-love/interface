@@ -12,6 +12,12 @@ declare module '*.png' {
     export default src;
 }
 
+interface ImportMeta {
+    env: {
+        NODE_ENV: "development" | "production";
+    };
+}
+
 // declare global {
 //     interface KeyboardEvent {
 //         code: "esc" | "fdsf";
