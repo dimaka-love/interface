@@ -10,27 +10,29 @@ This repository contains React UI components for the game itself. For source cod
 API incoming
 See how it is used in our game. TODO: add link
 
-## Features (not ready yet)
-
-- two different themes: [Material-UI](http://material-ui.com/) and [Arwes](https://arwes.dev/).
-- highly customizable for the user end
-
 ## UI Components
 
 ### HUD
 
-These comonents are using React for now. But for the better performance I have plans to render them using canvas.
+These comonents are using React DOM for now. But for the better performance I have plans to render them using canvas.
 
 - [ ] Rotate device overlay
-- [ ] Touch controls
-- [ ] Hotbar
-- [ ] Waila
+- [ ] Inventory
+- [ ] Players Tab
+- [X] Touch controls
+- [X] Hotbar
+- [X] Waila
 - [ ] Wearable armor state (such as jetpacks engine state)
 
 ### Other
 
-Other components is a React components that are not used in HUD:
+Other components is a React DOM components that are not used in HUD:
 
- - [ ] Main Menu pages
- - [ ] Pause Menu
- - [ ] Settings Menu
+ - [ ] Main Menu, loading and other screens
+ - [X] Pause Menu
+ - [X] Basic settings Menu with localStorage
+ - [ ] Settings Menu for controls
+
+## Other Things to do
+
+- [ ] highly customizable for the user end
