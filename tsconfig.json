@@ -12,7 +12,9 @@
         "noImplicitAny": false,
         "module": "ESNext",
         "noEmit": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        // doesnt work properly
+        // "forceConsistentCasingInFileNames": true
     },
     "include": [
         "src"
