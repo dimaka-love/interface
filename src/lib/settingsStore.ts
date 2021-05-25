@@ -3,6 +3,7 @@ import createStore, { UseStore } from "zustand";
 import { persist } from "zustand/middleware";
 
 import { SettingsSchema } from "./createSettings";
+import { useUserState } from "./state";
 import { entries } from "./util";
 
 export let useSettingsStore: UseStore<any> | undefined;
@@ -25,13 +26,8 @@ type InitSettingsStoreOptions<TS extends Record<string, SettingsSchema>> = {
     settingsTabsSchema: TS;
 };
 
-// try to use general store
-const useSettingsLoadedStore = createStore(() => ({
-    loaded: false
-}));
-
 export const useSettingsLoaded = () => {
-    return useSettingsLoadedStore(s => s.loaded);
+    return useUserState(s => s.userSettingLoaded);
 };
 
 type GetSettingValue<
@@ -88,7 +84,7 @@ export const initSettingsStore = <TS extends Record<string, SettingsSchema>>({ l
             deserialize: deserializeStore,
             onRehydrateStorage() {
                 return () => {
-                    useSettingsLoadedStore.setState({ loaded: true });
+                    useUserState.setState({ userSettingLoaded: true });
                 };
             },
         }

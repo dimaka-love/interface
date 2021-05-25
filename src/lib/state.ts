@@ -7,8 +7,10 @@ import { combine } from "zustand/middleware";
 
 import { SlotData } from "./CoreHUD/Hotbar";
 
+/** controls GUI appereance */
 export const useTheme = createStore(() => ({
-    forceUsingTouch: false,
+    /** if true, touch controls will be used */
+    forceTouchControls: false,
     touchButtonSize: 50,
     touchButtonsGap: 0,
     hotbarSlotsGap: 0,
@@ -17,8 +19,8 @@ export const useTheme = createStore(() => ({
 }));
 
 export const useUsingTouch = (): boolean => {
-    const forceUsingTouch = useTheme(state => state.forceUsingTouch);
-    // TODO-HIGH111 RESOLVE CHROMIUM BUG
+    const forceUsingTouch = useTheme(state => state.forceTouchControls);
+    // TODO-HIGH RESOLVE CHROMIUM BUG
     const touchSupportedQuery = useMedia(`(pointer: coarse)`);// do we need to check 'ontouchstart' in window?
     return useMemo(() => {
         return forceUsingTouch || touchSupportedQuery ||
@@ -35,6 +37,7 @@ export const useTouchMovement = createStore(() => ({
 
 type SlotsData = (null | SlotData)[];
 
+// i'll probably remove this
 export const useLocalGameState = createStore(
     combine(
         {
@@ -75,31 +78,23 @@ export type OpenedUI = {
     uiName: string;
 };
 
-export const useUserState = createStore(
-    combine(
-        {
-            /** if not null - UI is open */
-            openedUI: { type: "pause", menu: "root" } as OpenedUI | null,
-            usingRawInput: null as true | false | null
-        },
-        set => ({ set })
-    )
-);
-
-type Stats = Array<{
+type HardwareInfo = {
     icon?: JSX.Element;
 } & ({
     state: "loading" | "errored";
 } | {
     state: "loaded";
     value: string;
-})>;
+});
 
-export const useDeviceStats = createStore(
-    combine(
-        {
-            stats: [] as Stats
-        },
-        set => ({ set })
-    )
-);
+
+export const useUserState = createStore(() => ({
+    /** if not null - UI is open */
+    openedUI: { type: "pause", menu: "root" } as OpenedUI | null,
+    usingRawInput: null as true | false | null,
+    // todo implement this
+    // hardwareInfo: [] as HardwareInfo[],
+
+    // useUserLocalSettingsStore: null,
+    userSettingLoaded: false,
+}));
