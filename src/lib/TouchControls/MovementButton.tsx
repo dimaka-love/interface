@@ -5,21 +5,14 @@ import clsx from "clsx";
 import { css } from "@emotion/css";
 
 import { useTouchMovement } from "../state";
+import CircleButtonSvg from "./svg/CircleButtonSvg.svgr.svg";
+import MovementButtonSvg from "./svg/MovementButtonSvg.svgr.svg";
 import { useFixedPointerEvents } from "./util";
 
 export type MovementAction = [
     coordinate: "x" | "y" | "z",
     step: number
 ];
-
-const MovementButtonSvg: React.FC<React.ComponentProps<"svg">> = (props) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960" style={{ "background": "rgba(128, 128, 128, 0.8)" }} {...props}>
-    <path d="m480 151.8-376 651.3h752z" strokeWidth="10" stroke="#fff" fill="rgba(0, 0, 0, 0.5)" />
-</svg>;
-const CircleButtonSvg: React.FC<React.ComponentProps<"svg">> = (props) => <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <circle cx="100" cy="100" r="80" stroke="#fff" fill="none" strokeWidth="10" />
-</svg>;
-
-type args = Parameters<typeof useFixedPointerEvents>[0];
 
 type ComponentProps = {
     action: MovementAction | MovementAction[] | ((newState: boolean) => unknown),

@@ -2,9 +2,12 @@
 // and AUTOCOMPLETION FOR ARRAY ITEM LABELS!
 
 
-declare module '*.svg' {
-    const src: string;
-    export default src;
+declare module '*.svgr.svg' {
+    const ref: React.ForwardRefRenderFunction<
+        SVGSVGElement,
+        React.SVGAttributes<SVGSVGElement>
+    >;
+    export default ref;
 }
 
 declare module '*.png' {
