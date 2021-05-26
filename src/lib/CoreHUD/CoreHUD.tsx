@@ -9,7 +9,7 @@ import Hotbar from "./Hotbar";
 interface ComponentProps {
 }
 
-let HUD: React.FC<ComponentProps> = () => {
+let CoreHUD: React.FC<ComponentProps> = () => {
     const usingTouch = useUsingTouch();
 
     return <div className={css`
@@ -37,4 +37,5 @@ let HUD: React.FC<ComponentProps> = () => {
     </div>;
 };
 
-export default HUD;
+//lib-export
+export default CoreHUD;

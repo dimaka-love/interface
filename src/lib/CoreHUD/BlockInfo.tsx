@@ -54,13 +54,12 @@ let BlockInfo: React.FC<ComponentProps> = ({ data, animateDuration = 100 }) => {
             `}>
                     {
                         data && <>
-                            {/* <BlockModel
-                                sidesTexture="https://github.com/InventivetalentDev/minecraft-assets/blob/1.16.5/assets/minecraft/textures/block/dirt.png?raw=true"
-                                perspective="none"
-                                rotateX={-30}
-                                rotateY={-45}
-                                sizeFactor={0.35}
-                            /> */}<div />
+                            <div>
+                                {/* <HotbarBlockModel
+                                sideTextures="https://github.com/InventivetalentDev/minecraft-assets/blob/1.16.5/assets/minecraft/textures/block/dirt.png?raw=true"
+                            /> */}
+                            </div>
+                            <div />
                             <div className={css`
                                 display: flex;
                                 flex-direction: column;
