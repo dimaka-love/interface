@@ -16,7 +16,7 @@ See how it is used in our game. TODO: add link
 
 These comonents are using React DOM for now. But for the better performance I have plans to render them using canvas.
 
-- [ ] Rotate device overlay
+- [X] Rotate device overlay
 - [ ] Inventory
 - [ ] Players Tab
 - [X] Touch controls
@@ -36,3 +36,4 @@ Other components is a React DOM components that are not used in HUD:
 ## Other Things to do
 
 - [ ] highly customizable for the user end
+- [ ] forward refs
