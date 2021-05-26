@@ -8,4 +8,6 @@ import ReactDOM from "react-dom";
 
 import App from "./App";
 
+type a = React.Component;
+
 ReactDOM.render(<App />, document.getElementById("root"));

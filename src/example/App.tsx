@@ -1,45 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+
+import _ from "lodash-es";
 
 import { css } from "@emotion/css";
-import { MenuList } from "@material-ui/core";
 
 // import backgroundTestingSrc from "../"; TODO! FIX SNOWPACK!!
 import AppProvider from "../lib/AppProvider";
+import CoreHUD from "../lib/CoreHUD/CoreHUD";
+import { SlotData } from "../lib/CoreHUD/Hotbar";
 import ErrorBoundary from "../lib/ErrorBoundary";
+import Inventory from "../lib/Inventory/Inventory";
 import PauseMenu, { PauseSchema } from "../lib/PauseMenu/PauseMenu";
-import { getSettingValue, initSettingsStore, useSettingsLoaded } from "../lib/settingsStore";
+import { initSettingsStore, useSettingsLoaded } from "../lib/settingsStore";
+import { useLocalGameState } from "../lib/state";
 import { tabsSchema } from "./settings";
 
 interface ComponentProps {
 }
-
-const TestOverlay: React.FC<{ type: "test" | "nteTest"; }> = () => {
-    useEffect(() => {
-
-    }, []);
-
-    return <div
-        className={css`
-            position: fixed;
-            top: 0;
-            right: 0;
-        `}
-    ></div>;
-};
-
-const TestKeyboard: React.FC = () => {
-    const [pressed, setPressed] = useState(false);
-
-    useEffect(() => {
-        const log = (e: KeyboardEvent) => console.log(e.type, e.code);
-
-        window.addEventListener("keydown", log);
-        window.addEventListener("keypress", log);
-        window.addEventListener("keyup", log);
-    }, []);
-
-    return <div>pressed: {pressed.toString()}</div>;
-};
 
 export const pauseSchema: PauseSchema = {
     buttons: [
@@ -59,43 +36,20 @@ export const pauseSchema: PauseSchema = {
     ]
 };
 
-const TestButton = (props) => <button
-    className={css`
-                padding: 5px 8px;
-                &:focus {
-                    outline: 1px solid dodgerblue;
-                }
-            `}
-    {...props}
->Hey There</button>;
-
-const TestMenu: React.FC = () => {
-    return <MenuList>
-        <TestButton autoFocus className="Mui-focusVisible" />
-        <TestButton />
-        {/* <ListItem button>
-            <ListItemText primary="Hey There!" />
-        </ListItem>
-        <ListItem button>
-            <ListItemText primary="Hey There!" />
-        </ListItem> */}
-    </MenuList>;
-};
-
 initSettingsStore({
     localStorageKey: "dimaka-local-settings",
     settingsTabsSchema: tabsSchema
 });
 
+useLocalGameState.setState({
+    slots: _.times(9, (): SlotData => ({
+        type: "block",
+        getTexture: () => `https://github.com/InventivetalentDev/minecraft-assets/blob/1.16.5/assets/minecraft/textures/block/dirt.png?raw=true`
+    }))
+});
 
 let App: React.FC<ComponentProps> = ({ }) => {
     const settingsLoaded = useSettingsLoaded();
-
-    useEffect(() => {
-        if (!settingsLoaded) return;
-        const resolution = getSettingValue(tabsSchema, "video", "general", "resolution");
-        console.log("value", resolution);
-    }, [settingsLoaded]);
 
     return <ErrorBoundary>
         <AppProvider
@@ -115,10 +69,20 @@ let App: React.FC<ComponentProps> = ({ }) => {
                     text: "SETTINGS",
                 }
             ]} /> */}
-            {/* <HUD /> */}
-            {
-                !settingsLoaded ? <p>Settings are loading</p> : <PauseMenu schema={pauseSchema} />
-            }
+            {/* <div style={{
+                width: 200,
+                height: 200,
+                padding: 50
+            }}>
+                <HotbarBlockModel
+                    RootDivProps={{
+                        style: { overflow: "visible" }
+                    }}
+                    sideTextures=""
+                />
+            </div> */}
+            <Inventory />
+            <CoreHUD />
             {/* <TestMenu /> */}
             {/* <TestKeyboard /> */}
             {/* <Dialogs /> */}
