@@ -1,3 +1,9 @@
+export const zIndexes = {
+    canvas: 5,
+    hud: 10,
+    modal: 1250,
+};
+
 const css = a => a;
 
 export const fullScreenFixedStyles = css`
@@ -6,6 +12,14 @@ export const fullScreenFixedStyles = css`
     left: 0;
     right: 0;
     bottom: 0;
+`;
+
+export const modalStyles = `
+    ${fullScreenFixedStyles}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: ${zIndexes.modal};
 `;
 
 export const buttonStyles = css`

@@ -3,19 +3,19 @@ import { useMemo } from "react";
 import _ from "lodash-es";
 import { useMedia } from "react-use";
 import createStore from "zustand";
-import { combine } from "zustand/middleware";
 
 import { SlotData } from "./CoreHUD/Hotbar";
 
-/** controls GUI appereance */
+/** custom GUI appereance */
 export const useTheme = createStore(() => ({
     /** if true, touch controls will be used */
     forceTouchControls: false,
     touchButtonSize: 50,
     touchButtonsGap: 0,
     hotbarSlotsGap: 0,
-    maxHotbarSlotSize: 50,
-    githubRepo: null as string | null
+    maxHotbarSlotSize: 45,
+    // todo
+    githubRepo: null as string | null,
 }));
 
 export const useUsingTouch = (): boolean => {
@@ -38,15 +38,11 @@ export const useTouchMovement = createStore(() => ({
 type SlotsData = (null | SlotData)[];
 
 // i'll probably remove this
-export const useLocalGameState = createStore(
-    combine(
-        {
-            slots: _.times(9, () => null) as SlotsData,
-            isFlying: false
-        },
-        set => ({ set })
-    )
-);
+export const useLocalGameState = createStore(() => ({
+    slots: _.times(9, () => null) as SlotsData,
+    selectedSlot: 0,
+    isFlying: false
+}));
 
 export type SettingsMenus =
     | "video"
@@ -90,7 +86,7 @@ type HardwareInfo = {
 
 export const useUserState = createStore(() => ({
     /** if not null - UI is open */
-    openedUI: { type: "pause", menu: "root" } as OpenedUI | null,
+    openedUI: null as OpenedUI | null,
     usingRawInput: null as true | false | null,
     // todo implement this
     // hardwareInfo: [] as HardwareInfo[],

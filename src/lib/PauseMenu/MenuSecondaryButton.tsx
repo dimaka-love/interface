@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import { css } from "@emotion/css";
 
-import { buttonStyles } from "./styles";
+import { buttonStyles } from "../styles";
 
 type ComponentProps = {
     children?: void;

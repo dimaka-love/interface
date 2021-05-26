@@ -4,8 +4,8 @@ import { Animator } from "@arwes/animation";
 import { Button, FrameHexagon, Text } from "@arwes/core";
 import { css } from "@emotion/css";
 
-import { zIndexes } from "../AppProvider";
 import { useTheme } from "../state";
+import { zIndexes } from "../styles";
 import Screen from "./Screen";
 
 type ButtonProps = {
@@ -26,7 +26,7 @@ let MainMenu: React.FC<ComponentProps> = ({ buttons }) => {
     const githubRepo = useTheme(store => store.githubRepo);
 
     return <Screen className={css`
-        z-index: ${zIndexes.pauseMenu};
+        z-index: ${zIndexes.modal};
         /* background: url("https://playground.arwes.dev/assets/images/wallpaper-large.jpg") no-repeat center center/cover; */
     `}>
         <h1

@@ -78,7 +78,6 @@ export const initSettingsStore = <TS extends Record<string, SettingsSchema>>({ l
                 state = omitBy(state, (value) => {
                     return Object.keys(value).length === 0;
                 });
-                console.log("push state", state);
                 return JSON.stringify({ state, version });
             },
             deserialize: deserializeStore,

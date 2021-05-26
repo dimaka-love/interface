@@ -42,6 +42,7 @@ const TouchMovementArea: React.FC<TouchAreaProps> = ({ templateAreas, children }
     }, [templateAreas]);
 
     return <div
+        data-name="TouchMovementArea"
         className={css`
                 display: grid;
                 grid-template-areas: ${gridTemplateAreas};

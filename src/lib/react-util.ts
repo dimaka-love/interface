@@ -1,6 +1,8 @@
 // SHOULD BE USED AS STANDALONE LIBRARY
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+
+import { useOrientation } from "react-use";
 
 import { getLastSiblingSelector, getSiblingSelector, isMacOs } from "./util";
 
@@ -61,6 +63,29 @@ export const useModalState = (
             close: () => setState(false)
         };
     }, [state]);
+};
+
+export const useDeviceNeedsRotation = () => {
+    const orientation = useOrientation();
+
+    const modal = useModalState();
+
+    const firstTime = useRef(true);
+
+    // another 5 chromium bugs
+
+    useEffect(() => {
+        // todo on devices with sensor hook always got fired twice on first render
+        if (firstTime.current) {
+            firstTime.current = false;
+            return;
+        }
+        // TODO-HIGH calculation
+        window.innerWidth < 500 && window.innerHeight > window.innerWidth ?
+            modal.show() : modal.close();
+    }, [orientation]);
+
+    return modal.isOpen;
 };
 
 type UseAdvancedState = <T extends boolean | string | number>(initialValue: T | (() => T)) => T & {

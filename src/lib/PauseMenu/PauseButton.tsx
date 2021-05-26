@@ -4,8 +4,8 @@ import { css } from "@emotion/css";
 
 import { addElemToFocus } from "../private-state";
 import { PauseMenus, useUserState } from "../state";
+import { buttonStyles, focusableElemOutline } from "../styles";
 import { closePauseMenu } from "./PauseMenu";
-import { buttonStyles, focusableElemOutline } from "./styles";
 
 type ComponentProps = {
     label: string;

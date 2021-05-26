@@ -4,13 +4,12 @@ import useTypedEventListener from "use-typed-event-listener";
 
 import { css } from "@emotion/css";
 
-import { zIndexes } from "../AppProvider";
 import VisibleSubMenus from "../PauseSubMenu/VisibleSubMenus";
 import { useFocusController, useModalState } from "../react-util";
-import { useDeviceStats, useUserState } from "../state";
+import { useUserState } from "../state";
+import { modalStyles } from "../styles";
 import EscWarning from "./EscWarning";
 import PauseButton from "./PauseButton";
-import { fullScreenFixedStyles } from "./styles";
 
 export type PauseSchema = {
     buttons: React.ComponentProps<typeof PauseButton>[];
@@ -21,23 +20,23 @@ interface ComponentProps {
     // gameTitle?: string;
 }
 
-const RightCornerInfo: React.FC = () => {
-    const deviceStats = useDeviceStats(s => s.stats);
+// const RightCornerInfo: React.FC = () => {
+//     const deviceStats = useUserState(s => s.hardwareInfo);
 
-    return <div style={{
-        position: "fixed",
-        top: 0,
-        right: 0,
-        padding: 5
-    }}>
-        {
-            deviceStats.map(stat => {
-                if (stat.state !== "loaded") return null;
-                return stat.value;
-            })
-        }
-    </div>;
-};
+//     return <div style={{
+//         position: "fixed",
+//         top: 0,
+//         right: 0,
+//         padding: 5
+//     }}>
+//         {
+//             deviceStats.map(stat => {
+//                 if (stat.state !== "loaded") return null;
+//                 return stat.value;
+//             })
+//         }
+//     </div>;
+// };
 
 export const openPauseMenu = () => {
     useUserState.setState({ openedUI: { type: "pause", menu: "root" } });
@@ -92,21 +91,15 @@ let PauseMenu: React.FC<ComponentProps> = ({ schema }) => {
             <div
                 ref={buttonsContainerRef}
                 className={css`
-                ${fullScreenFixedStyles}
-                background-color: rgba(0, 0, 0, 0.3);
-                @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
-                    backdrop-filter: blur(3px);
-                    background-color: transparent;
-                }
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                z-index: ${zIndexes.pauseMenu};
-        `}
+                    ${modalStyles}
+                    background-color: rgba(0, 0, 0, 0.3);
+                    @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+                        backdrop-filter: blur(3px);
+                        background-color: transparent;
+                    }
+                    flex-direction: column;
+                `}
             >
-                <RightCornerInfo />
-                {/* <GameTitle>{import.meta.env.SNOWPACK_PUBLIC_NAME}</GameTitle> */}
                 {schema.buttons.map((props, index) => {
                     return <PauseButton
                         key={props.label}

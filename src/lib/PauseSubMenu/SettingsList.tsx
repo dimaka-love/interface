@@ -5,8 +5,8 @@ import { clamp } from "lodash";
 import { css } from "@emotion/css";
 
 import { SettingField } from "../createSettings";
-import { focusableElemOutline } from "../PauseMenu/styles";
 import { useSettingsStore } from "../settingsStore";
+import { focusableElemOutline } from "../styles";
 import { isMacOs } from "../util";
 import { MenuSetting, SliderSetting, ToggleSetting } from "./SettingControllers";
 

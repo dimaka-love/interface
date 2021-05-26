@@ -10,21 +10,20 @@ import { CSSObject } from "@emotion/serialize";
 import { createMuiTheme, ThemeProvider as MUIThemeProvider } from "@material-ui/core/styles";
 
 import FixedStylesBaseline from "./FixedStylesBaseline";
+import { useDeviceNeedsRotation } from "./react-util";
+import RotationNeeded from "./RotationNeeded";
 import { useSettingsStore } from "./settingsStore";
 
 interface ComponentProps {
+    // canvas?:
     rootClassName?: string;
     /** override default Arwes theme settings */
     arwesThemeSettings?: Pick<React.ComponentProps<typeof ArwesThemeProvider>, "themeSettings">;
+    /** @default true */
+    hideHudIfDeviceNeedsRotation?: boolean,
     // check rerender with global prop
     // no selected prop. it is controlled by the component itself
 }
-
-export const zIndexes = {
-    canvas: 5,
-    hud: 10,
-    pauseMenu: 1250,
-};
 
 const GLOBAL_STYLES: Record<string, CSSObject> = {
     "html, body": {
@@ -45,12 +44,14 @@ const muiTheme = createMuiTheme({
 });
 
 /** Main entrypoint for the whole library. Your app must be wrapped with this component */
-let AppProvider: React.FC<ComponentProps> = ({ children, rootClassName, arwesThemeSettings = {} }) => {
+let AppProvider: React.FC<ComponentProps> = ({ children, rootClassName, arwesThemeSettings = {}, hideHudIfDeviceNeedsRotation = true }) => {
     useEffect(() => {
         if (useSettingsStore === undefined) {
             throw new Error("Init settings store before AppProvider mount!");
         }
     }, []);
+
+    const rotateDevice = useDeviceNeedsRotation() && hideHudIfDeviceNeedsRotation;
 
     return <ArwesThemeProvider themeSettings={{ ...arwesThemeSettings }}>
         <Helmet>
@@ -70,10 +71,12 @@ let AppProvider: React.FC<ComponentProps> = ({ children, rootClassName, arwesThe
             `)}
         >
             <MUIThemeProvider theme={muiTheme}>
-                {children}
+                {/* render HUD */}
+                {rotateDevice ? <RotationNeeded /> : children}
             </MUIThemeProvider>
         </div>
     </ArwesThemeProvider>;
 };
 
+// export-lib
 export default AppProvider;
