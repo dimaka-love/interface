@@ -5,8 +5,8 @@ import clsx from "clsx";
 import { css } from "@emotion/css";
 
 import { useTouchMovement } from "../state";
-import CircleButtonSvg from "./svg/CircleButtonSvg.svgr.svg";
-import MovementButtonSvg from "./svg/MovementButtonSvg.svgr.svg";
+import CircleButtonSvg from "./svg/CircleButton.svgr.svg";
+import MovementButtonSvg from "./svg/MovementButton.svgr.svg";
 import { useFixedPointerEvents } from "./util";
 
 export type MovementAction = [
@@ -52,6 +52,7 @@ let MovementButton: React.FC<ComponentProps> = ({
         `, Image.className) : undefined;
 
     return <div
+        data-name="MovementButton"
         {...DivProps}
         className={clsx(css`
             width: 100%;
@@ -69,7 +70,12 @@ let MovementButton: React.FC<ComponentProps> = ({
         {Image &&
             Image.type === "bundled" ?
             Image.src === "arrow" ?
-                <MovementButtonSvg className={imageClassName} /> :
+                <MovementButtonSvg className={clsx(
+                    css`
+                        background: rgba(128, 128, 128, 0.8);
+                    `,
+                    imageClassName
+                )} /> :
                 <CircleButtonSvg className={imageClassName} />
             :
             <img
