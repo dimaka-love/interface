@@ -15,6 +15,9 @@ const config = {
         ...exampleMount,
         ...libMount
     },
+    // mount: {
+    //     "src-test": { url: "/" }
+    // },
     devOptions: {
         port: 8000
     },
@@ -46,7 +49,13 @@ const config = {
                     ]
                 }
             }
-        ]
+        ],
+        [
+            "snowpack-svgr-plugin", {}
+        ],
+        // [
+        //     "@snowpack/plugin-react-refresh", {}
+        // ]
     ],
 
 };
