@@ -72,8 +72,8 @@ let Hotbar: React.FC<ComponentProps> = () => {
                     justify-content: center;
                     align-items: center;
                 `}
-                onClick={() => {
-                    useUserState.setState({ openedUI: { type: "pause", menu: "root" } });
+                onTouchStart={() => {
+                    useUserState.setState({ openedUI: { type: "inventory" } });
                 }}
             >
                 <MoreHoriz color="action" />
