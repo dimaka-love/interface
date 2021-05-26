@@ -4,6 +4,9 @@ build
 *-build
 *.cpp
 
+esbuild-out
+src-test
+
 # for local temporary tests
 test.html
 
