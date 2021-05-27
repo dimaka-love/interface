@@ -5,7 +5,6 @@ import { css } from "@emotion/css";
 import { SettingsSchema } from "../createSettings";
 import { useFocusController } from "../react-util";
 import { appSettingsTabsSchema } from "../settingsStore";
-import { entries } from "../util";
 import MenuWithTabs from "./MenuWithTabs";
 import SettingsItem, { PersistedSettingItem } from "./SettingsList";
 
@@ -42,8 +41,8 @@ const SettingsList: React.FC = ({ children }) => {
 const SettingsTabPanel: React.FC<{ tabName: string, schema: SettingsSchema; }> = ({ tabName, schema }) => {
     return <SettingsList>
         {
-            entries(schema).map(([groupName, groupSchema]) => {
-                return entries(groupSchema).map(([label, settingSchema]) => {
+            Object.entries(schema).map(([groupName, groupSchema]) => {
+                return Object.entries(groupSchema).map(([label, settingSchema]) => {
                     return <PersistedSettingItem
                         key={`${groupName}-${label}`}
                         label={label as string}
@@ -61,7 +60,7 @@ const SettingsTabPanel: React.FC<{ tabName: string, schema: SettingsSchema; }> =
 
 let Settings: React.FC<ComponentProps> = () => {
     const tabs = useMemo((): React.ComponentProps<typeof MenuWithTabs>["tabs"] => {
-        return entries(appSettingsTabsSchema!).map(([tabName, settingsSchema]) => {
+        return Object.entries(appSettingsTabsSchema!).map(([tabName, settingsSchema]) => {
             return {
                 tabName,
                 panelContent: <SettingsTabPanel tabName={tabName} schema={settingsSchema} />

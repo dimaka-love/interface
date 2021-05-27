@@ -8,7 +8,6 @@ import { css } from "@emotion/css";
 import { ResizeObserver } from "@juggle/resize-observer";
 
 import type { Except } from "type-fest";
-
 // UNMAINTAINED! Original Version of HotbarBlockModel
 
 // You can apply this cool filter if you use this component in documentation: boxShadow: "inset 0 0 10px gray";
@@ -91,7 +90,7 @@ let BlockModel: React.FC<ComponentProps> = ({
 
     // TS still normalizes values
     const sidesTextureNormalized = useMemo(() =>
-        typeof sidesTexture === "string" ? makeBlockSides(sidesTexture) : Object.entries(sidesTexture) as [BlockSide, string][], [sidesTexture]);
+        typeof sidesTexture === "string" ? makeBlockSides(sidesTexture) : Object.entries(sidesTexture), [sidesTexture]);
 
     return <div
         {...RootDivProps}

@@ -6,7 +6,6 @@ import { css } from "@emotion/css";
 import { Input, MenuItem, Select, Slider, Switch } from "@material-ui/core";
 
 import { SettingField } from "../createSettings";
-import { entries } from "../util";
 
 const focusOnClosestFocusableElem = (elem: HTMLElement) => {
     elem.closest('div[tabindex="0"]')!.focus();
@@ -28,7 +27,7 @@ export const MenuSetting: React.FC<PropsForSettingType<"menu", string>> = ({ val
     }, []);
 
     const menuOptionsLabel = useMemo(() => {
-        return entries(values)
+        return Object.entries(values)
             .map(([id, labelType]) => {
                 const label = getMenuItemLabel ? getMenuItemLabel(id) :
                     labelType === true ? startCase(id) :

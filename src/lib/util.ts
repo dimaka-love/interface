@@ -2,10 +2,6 @@
 
 export const isMacOs = navigator.userAgent.includes("Mac OS X");
 
-export const entries = <T extends object>(obj: T): [keyof T, T[keyof T]][] => {
-    return Object.entries(obj) as any;
-};
-
 export const getSiblingSelector = (elem: HTMLElement, selector: string, direction: "prev" | "next") => {
     const getSibling = (el: HTMLElement) =>
         (direction === "prev" ? el.previousElementSibling : el.nextElementSibling) as HTMLElement | null;

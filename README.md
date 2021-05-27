@@ -37,3 +37,5 @@ Other components is a React DOM components that are not used in HUD:
 
 - [ ] highly customizable for the user end
 - [ ] forward refs
+
+- [ ] Use Web Dev Server instead of Snowpack for testing
