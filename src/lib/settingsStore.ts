@@ -52,7 +52,10 @@ export const getSettingValue = <
 
 /** This function **MUST** be called before AppProvider is used. Any suggestions on API improvements are welcome! */
 export const initSettingsStore = <TS extends Record<string, SettingsSchema>>({ localStorageKey, settingsTabsSchema }: InitSettingsStoreOptions<TS>) => {
-    if (useSettingsStore) throw new Error(`useSettingsStore has already initialized`);
+    if (useSettingsStore) {
+        if (import.meta.env.NODE_ENV !== "production" && import.meta["hot"]) return;
+        throw new Error(`useSettingsStore has already initialized`);
+    }
     appSettingsTabsSchema = settingsTabsSchema;
     settingsLocalStorageKey = localStorageKey;
     // try to expose api
