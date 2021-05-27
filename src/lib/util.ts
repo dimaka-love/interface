@@ -10,6 +10,7 @@ export const getSiblingSelector = (elem: HTMLElement, selector: string, directio
         if (sibling.matches(selector)) return sibling;
         sibling = getSibling(sibling);
     }
+    return null;
     // describe rotate focus if out of siblings
 };
 
@@ -22,4 +23,5 @@ export const getLastSiblingSelector = (elem: HTMLElement, selector: string, dire
         if (nextSibling === null || !nextSibling.matches(selector)) return sibling;
         sibling = nextSibling;
     }
+    return null;
 };

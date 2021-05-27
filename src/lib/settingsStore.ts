@@ -4,7 +4,6 @@ import { persist } from "zustand/middleware";
 
 import { SettingsSchema } from "./createSettings";
 import { useUserState } from "./state";
-import { entries } from "./util";
 
 export let useSettingsStore: UseStore<any> | undefined;
 export let appSettingsTabsSchema: undefined | Record<string, any>;
@@ -16,7 +15,7 @@ const deserializeStore = (str: string): Record<"state" | "version", any> => {
 
 const filterValues = <K extends any>(obj: Record<string, K>, filterFn: (key: string, value: K) => boolean) => {
     return Object.fromEntries(
-        entries(obj).filter((arr) => filterFn(...arr))
+        Object.entries(obj).filter((arr) => filterFn(...arr))
     );
 };
 
@@ -66,7 +65,7 @@ export const initSettingsStore = <TS extends Record<string, SettingsSchema>>({ l
                 state = mapValues(state, (settingsGroups, tabName) => {
                     const settignsGroupsParsed = mapValues(settingsGroups, (settingsList, groupName) => {
                         return filterValues(settingsList, (key, value) => {
-                            const settingSchema = settingsTabsSchema[tabName][groupName][key];
+                            const settingSchema = settingsTabsSchema[tabName]![groupName]![key]!;
                             if (!("defaultValue" in settingSchema)) return false;
                             return settingSchema.defaultValue !== value;
                         });
