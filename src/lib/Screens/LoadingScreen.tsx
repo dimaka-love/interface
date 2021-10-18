@@ -1,18 +1,19 @@
-import React from "react";
+import React from 'react'
 
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress } from '@material-ui/core'
 
-import Screen from "./Screen";
+import Screen from './Screen'
 
-interface ComponentProps {
-}
+interface ComponentProps {}
 
 let LoadingScreen: React.FC<ComponentProps> = () => {
-    return <Screen>
-        <div />
-        <CircularProgress></CircularProgress>
-        <div />
-    </Screen>;
-};
+    return (
+        <Screen>
+            <div />
+            <CircularProgress></CircularProgress>
+            <div />
+        </Screen>
+    )
+}
 
-export default LoadingScreen;
+export default LoadingScreen

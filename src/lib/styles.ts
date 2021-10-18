@@ -2,9 +2,9 @@ export const zIndexes = {
     canvas: 5,
     hud: 10,
     modal: 1250,
-};
+}
 
-const css = String.raw;
+const css = String.raw
 
 export const fullScreenFixedStyles = css`
     position: fixed;
@@ -12,7 +12,7 @@ export const fullScreenFixedStyles = css`
     left: 0;
     right: 0;
     bottom: 0;
-`;
+`
 
 export const modalStyles = css`
     ${fullScreenFixedStyles}
@@ -20,7 +20,7 @@ export const modalStyles = css`
     justify-content: center;
     align-items: center;
     z-index: ${zIndexes.modal};
-`;
+`
 
 export const buttonStyles = css`
     padding: 0;
@@ -33,13 +33,13 @@ export const buttonStyles = css`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-`;
+`
 
 export const pixelatedImage = css`
     image-rendering: crisp-edges;
     image-rendering: pixelated;
-`;
+`
 
 export const focusableElemOutline = css`
     outline: 2px solid dodgerblue;
-`;
+`

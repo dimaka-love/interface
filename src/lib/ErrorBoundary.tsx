@@ -1,23 +1,25 @@
-import React from "react";
+import React from 'react'
 
-interface ComponentProps {
-}
+interface ComponentProps {}
 
-export default class ErrorBoundary extends React.Component<{}, { hasError: boolean; }> {
+export default class ErrorBoundary extends React.Component<
+    {},
+    { hasError: boolean }
+> {
     state = {
-        hasError: false
-    };
+        hasError: false,
+    }
 
     componentDidCatch(...args) {
-        console.error(args);
-        this.setState({ hasError: true });
+        console.error(args)
+        this.setState({ hasError: true })
     }
 
     render() {
         if (this.state.hasError) {
-            return <h1>App Crashed!</h1>;
+            return <h1>App Crashed!</h1>
         }
 
-        return this.props.children;
+        return this.props.children
     }
 }

@@ -1,11 +1,11 @@
 // MAIN APP ENTRYPOINT
 
-import React from "react";
+import React from 'react'
 
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom'
 
-import App from "./App";
+import App from './App'
 
-type a = React.Component;
+type a = React.Component
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'))

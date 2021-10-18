@@ -16,11 +16,17 @@ const selectedSlotClass = css`
     border: 4px solid white !important;
 `
 
-let HotbarSlot: React.FC<ComponentProps> = ({ slotIndex, style: { blocksPadding } }) => {
+let HotbarSlot: React.FC<ComponentProps> = ({
+    slotIndex,
+    style: { blocksPadding },
+}) => {
     const slotsData = useLocalGameState(state => state.slots)
     const selectedSlot = useLocalGameState(state => state.selectedSlot)
 
-    const slotData = useMemo(() => slotsData[selectedSlot], [slotsData, selectedSlot])
+    const slotData = useMemo(
+        () => slotsData[selectedSlot],
+        [slotsData, selectedSlot],
+    )
 
     return (
         <div
