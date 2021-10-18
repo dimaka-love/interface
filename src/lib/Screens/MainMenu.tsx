@@ -24,7 +24,7 @@ const RedLine = () => (
 )
 
 // TODO: MAKE ACTUAL GROUPS
-let MainMenu: React.FC<ComponentProps> = ({ buttons }) => {
+const MainMenu: React.FC<ComponentProps> = ({ buttons }) => {
     const githubRepo = useTheme(store => store.githubRepo)
 
     return (

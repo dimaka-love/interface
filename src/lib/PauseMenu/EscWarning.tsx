@@ -7,13 +7,11 @@ import { useUserState } from '../state'
 
 type ComponentProps = { open: boolean; onClose: () => unknown }
 
-function TransitionDown(props: any) {
-    return <Slide {...props} direction="down" />
-}
+const TransitionDown = (props: any) => <Slide {...props} direction="down" />
 
 // WRAPPER AROUND SNACKBAR!!! WITH!!!!!
 
-let EscWarning: React.FC<ComponentProps> = ({ ...snackbarProps }) => {
+const EscWarning: React.FC<ComponentProps> = ({ ...snackbarProps }) => {
     const pauseOpened = useUserState(s => s.openedUI)?.type === 'pause'
 
     useEffect(() => {

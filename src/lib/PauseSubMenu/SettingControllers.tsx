@@ -43,21 +43,23 @@ export const MenuSetting: React.FC<PropsForSettingType<'menu', string>> = ({
         buttonElem.tabIndex = -1
     }, [])
 
-    const menuOptionsLabel = useMemo(() => {
-        return Object.entries(values).map(([id, labelType]) => {
-            const label = getMenuItemLabel
-                ? getMenuItemLabel(id)
-                : labelType === true
-                ? startCase(id)
-                : typeof labelType === 'function'
-                ? labelType()
-                : labelType
-            return {
-                id,
-                label: label,
-            }
-        })
-    }, [values, getMenuItemLabel])
+    const menuOptionsLabel = useMemo(
+        () =>
+            Object.entries(values).map(([id, labelType]) => {
+                const label = getMenuItemLabel
+                    ? getMenuItemLabel(id)
+                    : labelType === true
+                    ? startCase(id)
+                    : typeof labelType === 'function'
+                    ? labelType()
+                    : labelType
+                return {
+                    id,
+                    label,
+                }
+            }),
+        [values, getMenuItemLabel],
+    )
 
     return (
         <Select
@@ -74,7 +76,7 @@ export const MenuSetting: React.FC<PropsForSettingType<'menu', string>> = ({
             }}
             value={value}
             onChange={e => {
-                onChange(e.target.value as string)
+                onChange(e.target.value)
             }}
             onClose={async () => {
                 // million workarounds for mui
@@ -82,13 +84,11 @@ export const MenuSetting: React.FC<PropsForSettingType<'menu', string>> = ({
                 focusOnClosestFocusableElem(selectElemRef.current)
             }}
         >
-            {menuOptionsLabel.map(({ label, id }) => {
-                return (
-                    <MenuItem key={id} value={id}>
-                        {label}
-                    </MenuItem>
-                )
-            })}
+            {menuOptionsLabel.map(({ label, id }) => (
+                <MenuItem key={id} value={id}>
+                    {label}
+                </MenuItem>
+            ))}
         </Select>
     )
 }
@@ -96,20 +96,18 @@ export const MenuSetting: React.FC<PropsForSettingType<'menu', string>> = ({
 // TOGGLE
 
 export const ToggleSetting: React.FC<PropsForSettingType<'toggle', boolean>> =
-    ({ value, onChange }) => {
-        return (
-            <Switch
-                inputProps={{
-                    tabIndex: -1,
-                    onFocus: ({ currentTarget }) =>
-                        focusOnClosestFocusableElem(currentTarget),
-                }}
-                color="primary"
-                checked={value}
-                onChange={(_, checked) => onChange(checked)}
-            />
-        )
-    }
+    ({ value, onChange }) => (
+        <Switch
+            inputProps={{
+                tabIndex: -1,
+                onFocus: ({ currentTarget }) =>
+                    focusOnClosestFocusableElem(currentTarget),
+            }}
+            color="primary"
+            checked={value}
+            onChange={(_, checked) => onChange(checked)}
+        />
+    )
 
 // SLIDER
 
@@ -128,14 +126,14 @@ const CustomSlider: React.FC<React.ComponentProps<typeof Slider>> = ({
 
     useEffect(() => {
         // remove focus ability from all elems
-        sliderRef.current.querySelectorAll('[tabindex="0"]').forEach(el => {
+        for (const el of sliderRef.current.querySelectorAll('[tabindex="0"]')) {
             const elem = el as HTMLElement
             elem.tabIndex = -1
             // no memory leak?
             elem.addEventListener('focus', () => {
                 focusOnClosestFocusableElem(elem)
             })
-        })
+        }
     }, [])
 
     return (
@@ -183,6 +181,7 @@ export const SliderSetting: React.FC<PropsForSettingType<'slider', number>> = ({
             `}
         >
             <Input
+                disableUnderline
                 type="number"
                 inputProps={{
                     inputMode: 'numeric',
@@ -190,8 +189,6 @@ export const SliderSetting: React.FC<PropsForSettingType<'slider', number>> = ({
                     max,
                     tabIndex: -1,
                 }}
-                disableUnderline
-                onFocus={e => (e.target as HTMLInputElement).select()}
                 className={css`
                     font-size: 0.8em !important;
                     & input {
@@ -214,11 +211,12 @@ export const SliderSetting: React.FC<PropsForSettingType<'slider', number>> = ({
                     }
                 `}
                 value={value}
+                onFocus={e => (e.target as HTMLInputElement).select()}
                 onChange={e => handleChange(+e.target.value)}
             />
             <CustomSlider
-                onChange={(_, val) => handleChange(val as number)}
                 value={value}
+                onChange={(_, val) => handleChange(val as number)}
             />
         </div>
     )

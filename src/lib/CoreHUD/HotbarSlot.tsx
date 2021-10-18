@@ -16,7 +16,7 @@ const selectedSlotClass = css`
     border: 4px solid white !important;
 `
 
-let HotbarSlot: React.FC<ComponentProps> = ({
+const HotbarSlot: React.FC<ComponentProps> = ({
     slotIndex,
     style: { blocksPadding },
 }) => {

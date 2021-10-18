@@ -17,7 +17,7 @@ import HotbarSlot from './HotbarSlot'
 
 interface ComponentProps {}
 
-let Hotbar: React.FC<ComponentProps> = () => {
+const Hotbar: React.FC<ComponentProps> = () => {
     const [hotbarRef, { width }] = reactUseMeasure({ polyfill: ResizeObserver })
 
     const usingTouch = useUsingTouch()
@@ -35,6 +35,7 @@ let Hotbar: React.FC<ComponentProps> = () => {
 
     return (
         <div
+            ref={hotbarRef}
             className={css`
                 width: 100%;
                 max-width: ${maxHotbarSlotSize * slots.length}px;
@@ -44,7 +45,6 @@ let Hotbar: React.FC<ComponentProps> = () => {
                 gap: ${hotbarSlotsGap}px;
                 pointer-events: ${usingTouch ? 'initial' : 'none'};
             `}
-            ref={hotbarRef}
         >
             {slots.map((_, index) => (
                 <HotbarSlot

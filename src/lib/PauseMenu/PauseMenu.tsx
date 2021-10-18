@@ -12,7 +12,7 @@ import EscWarning from './EscWarning'
 import PauseButton from './PauseButton'
 
 export type PauseSchema = {
-    buttons: React.ComponentProps<typeof PauseButton>[]
+    buttons: Array<React.ComponentProps<typeof PauseButton>>
 }
 
 interface ComponentProps {
@@ -47,7 +47,7 @@ export const closePauseMenu = () => {
     // requestPointerLock
 }
 
-let PauseMenu: React.FC<ComponentProps> = ({ schema }) => {
+const PauseMenu: React.FC<ComponentProps> = ({ schema }) => {
     const buttonsContainerRef = useRef<HTMLDivElement>(null!)
     const escWarning = useModalState()
 
@@ -73,10 +73,8 @@ let PauseMenu: React.FC<ComponentProps> = ({ schema }) => {
                     escWarning.open()
                     break
             }
-        } else {
-            if (e.code === 'Escape') {
-                openPauseMenu()
-            }
+        } else if (e.code === 'Escape') {
+            openPauseMenu()
         }
     })
 
@@ -90,35 +88,31 @@ let PauseMenu: React.FC<ComponentProps> = ({ schema }) => {
             <EscWarning open={escWarning.isOpen} onClose={escWarning.close} />
 
             {openedUI?.type === 'pause' && (
-                <>
-                    <div
-                        ref={buttonsContainerRef}
-                        className={css`
-                            ${modalStyles}
-                            background-color: rgba(0, 0, 0, 0.3);
-                            @supports (
-                                (-webkit-backdrop-filter: blur(2em)) or
-                                    (backdrop-filter: blur(2em))
-                            ) {
-                                backdrop-filter: blur(3px);
-                                background-color: transparent;
-                            }
-                            flex-direction: column;
-                        `}
-                    >
-                        {schema.buttons.map((props, index) => {
-                            return (
-                                <PauseButton
-                                    key={props.label}
-                                    autoFocus={index === 0}
-                                    {...props}
-                                />
-                            )
-                        })}
-                        {/* I will probably return back button when problem with esc is resolved (BACK BUTTON) */}
-                        <VisibleSubMenus />
-                    </div>
-                </>
+                <div
+                    ref={buttonsContainerRef}
+                    className={css`
+                        ${modalStyles}
+                        background-color: rgba(0, 0, 0, 0.3);
+                        @supports (
+                            (-webkit-backdrop-filter: blur(2em)) or
+                                (backdrop-filter: blur(2em))
+                        ) {
+                            backdrop-filter: blur(3px);
+                            background-color: transparent;
+                        }
+                        flex-direction: column;
+                    `}
+                >
+                    {schema.buttons.map((props, index) => (
+                        <PauseButton
+                            key={props.label}
+                            autoFocus={index === 0}
+                            {...props}
+                        />
+                    ))}
+                    {/* I will probably return back button when problem with esc is resolved (BACK BUTTON) */}
+                    <VisibleSubMenus />
+                </div>
             )}
         </>
     )

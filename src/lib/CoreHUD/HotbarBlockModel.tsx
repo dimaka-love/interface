@@ -7,9 +7,9 @@ import reactUseMeasure from 'react-use-measure'
 import { css } from '@emotion/css'
 import { ResizeObserver } from '@juggle/resize-observer'
 
+import type { Except } from 'type-fest'
 import { pixelatedImage } from '../styles'
 
-import type { Except } from 'type-fest'
 interface StylesProps {
     rotateY?: number | 'animate'
     rotateX?: number
@@ -40,11 +40,11 @@ const sidesBrightness: Record<BlockSide, number> = {
     top: 1,
 }
 
-export const makeBlockSides = (texture: string): [BlockSide, string][] =>
+export const makeBlockSides = (texture: string): Array<[BlockSide, string]> =>
     blockSides.map(side => [side, texture])
 
 /** Special version of BlockModel for hotbar with only 3 sides and dimmings on sides */
-let HotbarBlockModel: React.FC<ComponentProps> = ({
+const HotbarBlockModel: React.FC<ComponentProps> = ({
     sideTextures: sidesTexture,
     RootDivProps = {},
     RotatbleDivProps = {},
@@ -67,6 +67,7 @@ let HotbarBlockModel: React.FC<ComponentProps> = ({
             })
             return
         }
+
         anime({
             targets: rotatingBlock,
             rotateY: '360deg',
@@ -81,13 +82,14 @@ let HotbarBlockModel: React.FC<ComponentProps> = ({
         () =>
             typeof sidesTexture === 'string'
                 ? makeBlockSides(sidesTexture)
-                : (Object.entries(sidesTexture) as [BlockSide, string][]),
+                : Object.entries(sidesTexture),
         [sidesTexture],
     )
 
     return (
         <div
             {...RootDivProps}
+            ref={rootRef}
             className={clsx(
                 'BlockModel',
                 css`
@@ -97,7 +99,6 @@ let HotbarBlockModel: React.FC<ComponentProps> = ({
                     position: relative;
                 `,
             )}
-            ref={rootRef}
         >
             <div
                 {...RotatbleDivProps}

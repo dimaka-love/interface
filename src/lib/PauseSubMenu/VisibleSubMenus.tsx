@@ -6,7 +6,7 @@ import Settings from './Settings'
 
 interface ComponentProps {}
 
-let VisibleSubMenus: React.FC<ComponentProps> = () => {
+const VisibleSubMenus: React.FC<ComponentProps> = () => {
     const openedUI = useUserState(s => s.openedUI)
 
     const subMenuComponent = useMemo(() => {

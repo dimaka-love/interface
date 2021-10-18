@@ -21,7 +21,7 @@ type ComponentProps = {
     | {
           action: 'custom'
           closePause: boolean
-          onClick: (event: React.MouseEvent<HTMLElement>) => {}
+          onClick: (event: React.MouseEvent<HTMLElement>) => void
       }
     | {
           action: 'disabled'
@@ -71,8 +71,8 @@ const PauseButton: React.FC<ComponentProps> = props => {
                     ${focusableElemOutline}
                 }
             `}
-            onClick={handleClick}
             autoFocus={props.autoFocus}
+            onClick={handleClick}
         >
             {props.label}
         </button>

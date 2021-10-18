@@ -122,9 +122,9 @@ const SettingsItem: React.FC<
                     ${focusableElemOutline}
                 }
             `}
+            tabIndex={0}
             onFocus={handleFocusBlurEvents}
             onBlur={handleFocusBlurEvents}
-            tabIndex={0}
             onKeyDown={({ code, currentTarget, target, ...event }) => {
                 if (target !== currentTarget) return
                 switch (code) {
@@ -151,8 +151,9 @@ const SettingsItem: React.FC<
                                 break
                         }
                 }
+
                 if (settingSchema.type === 'slider') {
-                    const ArrowKey = code.match(/Arrow(Left|Right)/)?.[1]
+                    const ArrowKey = /Arrow(Left|Right)/.exec(code)?.[1]
                     if (!ArrowKey) return
                     const modifierKey = isMacOs ? event.altKey : event.ctrlKey
                     onChange(

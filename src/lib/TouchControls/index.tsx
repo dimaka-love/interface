@@ -55,9 +55,10 @@ const TouchMovementArea: React.FC<TouchAreaProps> = ({
     const touchButtonsGap = useTheme(store => store.touchButtonsGap)
 
     // todo memoizing
-    const gridTemplateAreas = useMemo(() => {
-        return templateAreas.map(s => `"${s}"`).join('')
-    }, [templateAreas])
+    const gridTemplateAreas = useMemo(
+        () => templateAreas.map(s => `"${s}"`).join(''),
+        [templateAreas],
+    )
 
     return (
         <div
@@ -79,13 +80,6 @@ const pauseButtonSize = 45
 
 export const PauseButton: React.FC = () => (
     <img
-        onTouchStart={() => {
-            window.dispatchEvent(
-                new KeyboardEvent('keydown', {
-                    code: 'Escape',
-                }),
-            )
-        }}
         style={{
             position: 'fixed',
             top: 0,
@@ -95,17 +89,24 @@ export const PauseButton: React.FC = () => (
             padding: 5,
             backgroundColor: 'rgba(255, 255, 255, 0.1)',
         }}
+        onTouchStart={() => {
+            window.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    code: 'Escape',
+                }),
+            )
+        }}
         // src={pauseButtonSrc}
     />
 )
 
-export let LeftTouchArea: React.FC<ComponentProps> = () => {
+export const LeftTouchArea: React.FC<ComponentProps> = () => {
     const [showForwardAuxButtons, setShowForwardAuxButtons] = useState(false)
 
     return (
         <TouchMovementArea templateAreas={['wa w wd', 'a . d', '. s .']}>
-            {leftControlsConfig.map(([label, rotate, action]) => {
-                return (
+            {leftControlsConfig.map(
+                ([label, rotate, action]) =>
                     (Math.abs(rotate) !== 45 || showForwardAuxButtons) && (
                         <MovementButton
                             key={label}
@@ -126,9 +127,8 @@ export let LeftTouchArea: React.FC<ComponentProps> = () => {
                                 `,
                             }}
                         />
-                    )
-                )
-            })}
+                    ),
+            )}
         </TouchMovementArea>
     )
 }
@@ -138,33 +138,31 @@ const rightControlsConfig: ControlsConfig = [
     ['d', 180, ['y', -1]],
 ]
 
-export let RightTouchArea: React.FC<ComponentProps> = () => {
+export const RightTouchArea: React.FC<ComponentProps> = () => {
     const isFlying = useLocalGameState(state => state.isFlying)
 
     return (
         <TouchMovementArea templateAreas={['u .', 'c .', 'd .']}>
             {isFlying ? (
-                rightControlsConfig.map(([label, rotate, action]) => {
-                    return (
-                        <MovementButton
-                            key={label}
-                            action={action}
-                            // updateTouching={moving => updateMoving(moving, index)}
-                            DivProps={{
-                                className: css`
-                                    grid-area: ${label};
-                                `,
-                            }}
-                            Image={{
-                                type: 'bundled',
-                                src: 'arrow',
-                                className: css`
-                                    transform: rotate(${rotate}deg);
-                                `,
-                            }}
-                        />
-                    )
-                })
+                rightControlsConfig.map(([label, rotate, action]) => (
+                    <MovementButton
+                        key={label}
+                        action={action}
+                        // updateTouching={moving => updateMoving(moving, index)}
+                        DivProps={{
+                            className: css`
+                                grid-area: ${label};
+                            `,
+                        }}
+                        Image={{
+                            type: 'bundled',
+                            src: 'arrow',
+                            className: css`
+                                transform: rotate(${rotate}deg);
+                            `,
+                        }}
+                    />
+                ))
             ) : (
                 <MovementButton
                     action={['y', 1]}

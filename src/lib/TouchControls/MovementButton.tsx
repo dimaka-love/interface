@@ -29,7 +29,7 @@ const touchingButtonClass = css`
     background-color: rgba(255, 255, 255, 0.1);
 `
 
-let MovementButton: React.FC<ComponentProps> = ({
+const MovementButton: React.FC<ComponentProps> = ({
     action,
     children,
     DivProps,

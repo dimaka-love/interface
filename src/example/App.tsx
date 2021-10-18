@@ -65,7 +65,7 @@ const slotsCount = 9
 
 const slotWidth = window.innerWidth / slotsCount
 
-let App: React.FC<ComponentProps> = ({}) => {
+const App: React.FC<ComponentProps> = ({}) => {
     const show = useModalState()
 
     useEventListener(window, 'keydown', ({ code }) => {
@@ -106,20 +106,18 @@ let App: React.FC<ComponentProps> = ({}) => {
                 />
             </div> */}
                 {/* <BlockModelNew /> */}
-                {
-                    <div
-                        style={{ display: show.isOpen ? 'flex' : 'none' }}
-                        className={css`
-                            height: ${slotWidth}px;
-                        `}
-                    >
-                        {times(slotsCount, index => (
-                            <div key={index} style={{ width: slotWidth }}>
-                                <ItemSlot blocksPadding={9} data={slotData} />
-                            </div>
-                        ))}
-                    </div>
-                }
+                <div
+                    style={{ display: show.isOpen ? 'flex' : 'none' }}
+                    className={css`
+                        height: ${slotWidth}px;
+                    `}
+                >
+                    {times(slotsCount, index => (
+                        <div key={index} style={{ width: slotWidth }}>
+                            <ItemSlot blocksPadding={9} data={slotData} />
+                        </div>
+                    ))}
+                </div>
                 {/* <Inventory />
             <CoreHUD />
             <PauseMenu schema={pauseSchema} /> */}

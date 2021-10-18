@@ -6,10 +6,11 @@ import { Global, useTheme } from '@emotion/react'
 
 interface ComponentProps {}
 
-const deleteProps = <T extends object>(obj: T, props: (keyof T)[]) => {
-    props.forEach(prop => {
-        delete obj[prop]
-    })
+const deleteProps = <T extends Record<string, unknown>>(
+    obj: T,
+    props: Array<keyof T>,
+) => {
+    for (const prop of props) delete obj[prop]
 }
 
 // RESOLVE STYLE CONFLICTS
@@ -27,7 +28,7 @@ const useGlobalGeneralStyles = () => {
     }, [theme])
 }
 
-let FixedStylesBaseline: React.FC<ComponentProps> = () => {
+const FixedStylesBaseline: React.FC<ComponentProps> = () => {
     const globalGeneralStyles = useGlobalGeneralStyles()
 
     return <Global styles={globalGeneralStyles} />

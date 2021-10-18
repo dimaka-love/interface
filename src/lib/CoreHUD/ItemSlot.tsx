@@ -24,7 +24,7 @@ type ComponentProps = {
     blocksPadding: number
 }
 
-let ItemSlot: React.FC<ComponentProps> = ({
+const ItemSlot: React.FC<ComponentProps> = ({
     blocksPadding,
     data: rawSlotData,
 }) => {
@@ -36,18 +36,13 @@ let ItemSlot: React.FC<ComponentProps> = ({
 
     const slotData = useMemo(() => {
         if (!rawSlotData) return null
-        if (rawSlotData.type === 'item') {
-            return rawSlotData
-        } else {
-            return {
-                ...rawSlotData,
-                sideTextures: Object.fromEntries(
-                    blockSides.map(side => [
-                        side,
-                        rawSlotData.getTexture(side),
-                    ]),
-                ) as Record<BlockSide, string>,
-            }
+        if (rawSlotData.type === 'item') return rawSlotData
+
+        return {
+            ...rawSlotData,
+            sideTextures: Object.fromEntries(
+                blockSides.map(side => [side, rawSlotData.getTexture(side)]),
+            ) as Record<BlockSide, string>,
         }
     }, [rawSlotData])
 
@@ -66,7 +61,7 @@ let ItemSlot: React.FC<ComponentProps> = ({
             >
                 {slotData.type === 'item' ? (
                     <img
-                        alt={'Item'}
+                        alt="Item"
                         src={slotData.texture}
                         className={css`
                             ${pixelatedImage}

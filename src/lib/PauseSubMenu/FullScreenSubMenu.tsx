@@ -13,7 +13,7 @@ interface ComponentProps {
     closable?: boolean
 }
 
-let FullScreenSubMenu: React.FC<ComponentProps> = ({
+const FullScreenSubMenu: React.FC<ComponentProps> = ({
     children,
     closable = true,
 }) => {

@@ -49,7 +49,7 @@ const muiTheme = createMuiTheme({
 })
 
 /** Main entrypoint for the whole library. Your app must be wrapped with this component */
-let AppProvider: React.FC<ComponentProps> = ({
+const AppProvider: React.FC<ComponentProps> = ({
     // UI only
     children,
     rootClassName,
@@ -57,9 +57,8 @@ let AppProvider: React.FC<ComponentProps> = ({
     hideHudIfDeviceNeedsRotation = true,
 }) => {
     useEffect(() => {
-        if (useSettingsStore === undefined) {
+        if (useSettingsStore === undefined)
             throw new Error('Init settings store before AppProvider mount!')
-        }
     }, [])
 
     const rotateDevice =

@@ -44,13 +44,13 @@ const rotateFunctions: Record<BlockSide, string> = {
     back: 'rotateY(180deg)',
 }
 
-const makeBlockSides = (texture: string): [BlockSide, string][] =>
+const makeBlockSides = (texture: string): Array<[BlockSide, string]> =>
     blockSides.map(side => [side, texture])
 
 // Not used in Dimaka. Todo: make benchmarks. I'll replace DOM HUD with native (canvas)
 
 /** You **must** ensure that `height` is **always equal** to `width` of the container, otherwise you'd get *broken* cube */
-let BlockModel: React.FC<ComponentProps> = ({
+const BlockModel: React.FC<ComponentProps> = ({
     sideTextures: sidesTexture,
     RootDivProps = {},
     RotatbleDivProps = {},
@@ -75,6 +75,7 @@ let BlockModel: React.FC<ComponentProps> = ({
             })
             return
         }
+
         anime({
             targets: rotatingBlock,
             rotateY: '360deg',
@@ -100,6 +101,7 @@ let BlockModel: React.FC<ComponentProps> = ({
     return (
         <div
             {...RootDivProps}
+            ref={rootRef}
             className={clsx(
                 'BlockModel',
                 css`
@@ -111,7 +113,6 @@ let BlockModel: React.FC<ComponentProps> = ({
                     overflow: hidden;
                 `,
             )}
-            ref={rootRef}
         >
             <div
                 {...RotatbleDivProps}
@@ -122,32 +123,30 @@ let BlockModel: React.FC<ComponentProps> = ({
                     height: 100%;
                 `}
             >
-                {sidesTextureNormalized.map(([side, textureUrl]) => {
-                    return (
-                        <div
-                            key={side}
+                {sidesTextureNormalized.map(([side, textureUrl]) => (
+                    <div
+                        key={side}
+                        className={css`
+                            transform: ${rotateFunctions[side]}
+                                translateZ(${width / 2}px);
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                        `}
+                    >
+                        <img
+                            src={textureUrl}
+                            alt="block side"
+                            draggable="false"
                             className={css`
-                                transform: ${rotateFunctions[side]}
-                                    translateZ(${width / 2}px);
-                                position: absolute;
                                 width: 100%;
                                 height: 100%;
+                                image-rendering: crisp-edges;
+                                image-rendering: pixelated;
                             `}
-                        >
-                            <img
-                                src={textureUrl}
-                                alt={`block side`}
-                                draggable="false"
-                                className={css`
-                                    width: 100%;
-                                    height: 100%;
-                                    image-rendering: crisp-edges;
-                                    image-rendering: pixelated;
-                                `}
-                            />
-                        </div>
-                    )
-                })}
+                        />
+                    </div>
+                ))}
             </div>
         </div>
     )

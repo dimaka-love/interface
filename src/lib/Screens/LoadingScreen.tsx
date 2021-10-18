@@ -6,14 +6,12 @@ import Screen from './Screen'
 
 interface ComponentProps {}
 
-let LoadingScreen: React.FC<ComponentProps> = () => {
-    return (
-        <Screen>
-            <div />
-            <CircularProgress></CircularProgress>
-            <div />
-        </Screen>
-    )
-}
+const LoadingScreen: React.FC<ComponentProps> = () => (
+    <Screen>
+        <div />
+        <CircularProgress />
+        <div />
+    </Screen>
+)
 
 export default LoadingScreen

@@ -9,16 +9,14 @@ import { useUserState } from '../state'
 
 interface ComponentProps {}
 
-function TransitionDown(props: any) {
-    return <Slide {...props} direction="down" />
-}
+const TransitionDown = (props: any) => <Slide {...props} direction="down" />
 
 const howToEnableRawInputUrl =
     'https://gist.github.com/zardoy/8325b680c08a396d820986991c54a41e'
 
 type SnackbarState = 'notShowed' | boolean | 'showed'
 
-let MouseRawInputSnackbar: React.FC<ComponentProps> = () => {
+const MouseRawInputSnackbar: React.FC<ComponentProps> = () => {
     const usingRawInput = useUserState(s => s.usingRawInput)
 
     const [snackbarState, setSnackbarState] =
@@ -38,13 +36,13 @@ let MouseRawInputSnackbar: React.FC<ComponentProps> = () => {
     return (
         <Snackbar
             open={typeof snackbarState === 'boolean'}
-            onClose={() => setSnackbarState('showed')}
             anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
             }}
             TransitionComponent={TransitionDown}
             autoHideDuration={4000}
+            onClose={() => setSnackbarState('showed')}
         >
             <Alert severity={snackbarState ? 'success' : 'warning'}>
                 Mouse Raw Input{' '}

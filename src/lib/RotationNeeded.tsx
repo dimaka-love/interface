@@ -7,23 +7,21 @@ import { modalStyles } from './styles'
 
 interface ComponentProps {}
 
-let RotationNeeded: React.FC<ComponentProps> = () => {
-    return (
-        <div
-            className={css`
-                ${modalStyles}
-                pointer-events: none;
-            `}
-        >
-            <ScreenRotation
-                color="action"
-                style={{
-                    width: '50%',
-                    height: '50%',
-                }}
-            />
-        </div>
-    )
-}
+const RotationNeeded: React.FC<ComponentProps> = () => (
+    <div
+        className={css`
+            ${modalStyles}
+            pointer-events: none;
+        `}
+    >
+        <ScreenRotation
+            color="action"
+            style={{
+                width: '50%',
+                height: '50%',
+            }}
+        />
+    </div>
+)
 
 export default RotationNeeded

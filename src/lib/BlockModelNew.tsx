@@ -23,19 +23,17 @@ const SceneBlock: React.FC = () => {
     )
 }
 
-let BlockModelNew: React.FC<ComponentProps> = () => {
-    return (
-        <Suspense fallback={null}>
-            <Canvas
-                camera={{
-                    position: [0, 0, -5],
-                }}
-            >
-                <ambientLight />
-                <SceneBlock />
-            </Canvas>
-        </Suspense>
-    )
-}
+const BlockModelNew: React.FC<ComponentProps> = () => (
+    <Suspense fallback={null}>
+        <Canvas
+            camera={{
+                position: [0, 0, -5],
+            }}
+        >
+            <ambientLight />
+            <SceneBlock />
+        </Canvas>
+    </Suspense>
+)
 
 export default BlockModelNew

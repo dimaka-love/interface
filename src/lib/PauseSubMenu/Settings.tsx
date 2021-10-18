@@ -40,37 +40,29 @@ const SettingsList: React.FC = ({ children }) => {
 
 // {/* <a href="https://gist.github.com/zardoy/6e5ce377d2b4c1e322e660973da069cd">How to disable VSync</a> */}
 const SettingsTabPanel: React.FC<{ tabName: string; schema: SettingsSchema }> =
-    ({ tabName, schema }) => {
-        return (
-            <SettingsList>
-                {Object.entries(schema).map(([groupName, groupSchema]) => {
-                    return Object.entries(groupSchema).map(
-                        ([label, settingSchema]) => {
-                            return (
-                                <PersistedSettingItem
-                                    key={`${groupName}-${label}`}
-                                    label={label as string}
-                                    settingSchema={settingSchema}
-                                    {...{
-                                        tabName,
-                                        groupName: groupName as string,
-                                    }}
-                                />
-                            )
-                        },
-                    )
-                })}
-            </SettingsList>
-        )
-    }
+    ({ tabName, schema }) => (
+        <SettingsList>
+            {Object.entries(schema).map(([groupName, groupSchema]) =>
+                Object.entries(groupSchema).map(([label, settingSchema]) => (
+                    <PersistedSettingItem
+                        key={`${groupName}-${label}`}
+                        label={label}
+                        settingSchema={settingSchema}
+                        {...{
+                            tabName,
+                            groupName,
+                        }}
+                    />
+                )),
+            )}
+        </SettingsList>
+    )
 
-let Settings: React.FC<ComponentProps> = () => {
-    const tabs = useMemo((): React.ComponentProps<
-        typeof MenuWithTabs
-    >['tabs'] => {
-        return Object.entries(appSettingsTabsSchema!).map(
-            ([tabName, settingsSchema]) => {
-                return {
+const Settings: React.FC<ComponentProps> = () => {
+    const tabs = useMemo(
+        (): React.ComponentProps<typeof MenuWithTabs>['tabs'] =>
+            Object.entries(appSettingsTabsSchema!).map(
+                ([tabName, settingsSchema]) => ({
                     tabName,
                     panelContent: (
                         <SettingsTabPanel
@@ -78,10 +70,10 @@ let Settings: React.FC<ComponentProps> = () => {
                             schema={settingsSchema}
                         />
                     ),
-                }
-            },
-        )
-    }, [])
+                }),
+            ),
+        [],
+    )
 
     return <MenuWithTabs tabsLabel="settings" tabs={tabs} />
 }

@@ -18,7 +18,7 @@ interface ComponentProps {
     tabs: Tab[]
 }
 
-let MenuWithTabs: React.FC<ComponentProps> = ({ tabs, tabsLabel }) => {
+const MenuWithTabs: React.FC<ComponentProps> = ({ tabs, tabsLabel }) => {
     const tabsRootRef = useRef<HTMLDivElement>(null!)
     const tabsListRef = useRef<HTMLButtonElement>(null!)
 
@@ -33,9 +33,8 @@ let MenuWithTabs: React.FC<ComponentProps> = ({ tabs, tabsLabel }) => {
             tabsListRef.current.contains(document.activeElement)
         )
             return
-        const currentFocusedButton = tabsRootRef.current.querySelector(
-            '.Mui-selected',
-        ) as HTMLElement
+        const currentFocusedButton =
+            tabsRootRef.current.querySelector('.Mui-selected')!
         if (!currentFocusedButton) return
         const elemToFocus = currentFocusedButton[
             e.code.endsWith('Left')
@@ -57,13 +56,13 @@ let MenuWithTabs: React.FC<ComponentProps> = ({ tabs, tabsLabel }) => {
 
     return (
         <div
+            ref={tabsRootRef}
             className={css`
                 & .MuiTabs-indicator {
                     height: 4px;
                     background-color: aqua;
                 }
             `}
-            ref={tabsRootRef}
         >
             <TabContext value={tab.toString()}>
                 <AppBar
@@ -74,45 +73,39 @@ let MenuWithTabs: React.FC<ComponentProps> = ({ tabs, tabsLabel }) => {
                 >
                     <TabList
                         ref={tabsListRef}
-                        onChange={handleTabChange}
-                        aria-label={`${tabsLabel}panel`}
                         selectionFollowsFocus
+                        aria-label={`${tabsLabel}panel`}
                         variant="scrollable"
                         scrollButtons="auto"
+                        onChange={handleTabChange}
                     >
-                        {tabs.map(({ tabName, disabled = false }, index) => {
-                            return (
-                                <Tab
-                                    disabled={disabled}
-                                    ref={
-                                        index === 0
-                                            ? firstTabButtonRef
-                                            : undefined
-                                    }
-                                    key={tabName}
-                                    label={tabName}
-                                    value={index.toString()}
-                                />
-                            )
-                        })}
+                        {tabs.map(({ tabName, disabled = false }, index) => (
+                            <Tab
+                                ref={
+                                    index === 0 ? firstTabButtonRef : undefined
+                                }
+                                key={tabName}
+                                disabled={disabled}
+                                label={tabName}
+                                value={index.toString()}
+                            />
+                        ))}
                     </TabList>
                 </AppBar>
 
-                {tabs.map(({ panelContent }, index) => {
-                    return (
-                        <TabPanel
-                            key={index}
-                            value={index.toString()}
-                            classes={{
-                                root: css`
-                                    padding: 0 !important;
-                                `,
-                            }}
-                        >
-                            {panelContent}
-                        </TabPanel>
-                    )
-                })}
+                {tabs.map(({ panelContent }, index) => (
+                    <TabPanel
+                        key={index}
+                        value={index.toString()}
+                        classes={{
+                            root: css`
+                                padding: 0 !important;
+                            `,
+                        }}
+                    >
+                        {panelContent}
+                    </TabPanel>
+                ))}
             </TabContext>
         </div>
     )
