@@ -69,7 +69,7 @@ let PauseMenu: React.FC<ComponentProps> = ({ schema }) => {
                     closePauseMenu();
                     break;
                 case "Escape":
-                    escWarning.show();
+                    escWarning.open();
                     break;
             }
         } else {

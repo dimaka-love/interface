@@ -4,7 +4,7 @@ import _ from "lodash-es";
 import { useMedia } from "react-use";
 import createStore from "zustand";
 
-import { SlotData } from "./CoreHUD/Hotbar";
+import { SlotData } from "./CoreHUD/ItemSlot";
 
 /** custom GUI appereance */
 export const useTheme = createStore(() => ({

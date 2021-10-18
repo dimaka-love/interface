@@ -1,17 +1,17 @@
 import React from "react";
 
-import _ from "lodash-es";
+import _, { times } from "lodash-es";
+import useEventListener from "use-typed-event-listener";
 
 import { css } from "@emotion/css";
 
 // import backgroundTestingSrc from "../"; TODO! FIX SNOWPACK!!
 import AppProvider from "../lib/AppProvider";
-import CoreHUD from "../lib/CoreHUD/CoreHUD";
-import { SlotData } from "../lib/CoreHUD/Hotbar";
+import ItemSlot, { SlotData } from "../lib/CoreHUD/ItemSlot";
 import ErrorBoundary from "../lib/ErrorBoundary";
-import Inventory from "../lib/Inventory/Inventory";
 import PauseMenu, { PauseSchema } from "../lib/PauseMenu/PauseMenu";
-import { initSettingsStore, useSettingsLoaded } from "../lib/settingsStore";
+import { useModalState } from "../lib/react-util";
+import { initSettingsStore } from "../lib/settingsStore";
 import { useLocalGameState } from "../lib/state";
 import { tabsSchema } from "./settings";
 
@@ -41,15 +41,35 @@ initSettingsStore({
     settingsTabsSchema: tabsSchema
 });
 
+export const dirtBlockTextureUrl = `https://raw.githubusercontent.com/PrismarineJS/minecraft-assets/master/data/1.16.4/blocks/dirt.png`;
+export const bowItemTextureUrl = `https://github.com/InventivetalentDev/minecraft-assets/blob/1.16.5/assets/minecraft/textures/item/bow.png?raw=true`;
+
 useLocalGameState.setState({
     slots: _.times(9, (): SlotData => ({
         type: "block",
-        getTexture: () => `https://github.com/InventivetalentDev/minecraft-assets/blob/1.16.5/assets/minecraft/textures/block/dirt.png?raw=true`
+        count: 1,
+        getTexture: () => dirtBlockTextureUrl
     }))
+    // slots: _.times(9, (): SlotData => ({
+    //     type: "item",
+    //     count: 64,
+    //     texture: bowItemTextureUrl
+    // }))
 });
 
+const slotData = useLocalGameState.getState().slots[0]!;
+
+const slotsCount = 9;
+
+const slotWidth = window.innerWidth / slotsCount;
+
 let App: React.FC<ComponentProps> = ({ }) => {
-    const settingsLoaded = useSettingsLoaded();
+    const show = useModalState();
+
+    useEventListener(window, "keydown", ({ code }) => {
+        if (code !== "KeyE") return;
+        show.toggle();
+    });
 
     return <ErrorBoundary>
         <AppProvider
@@ -81,11 +101,26 @@ let App: React.FC<ComponentProps> = ({ }) => {
                     sideTextures=""
                 />
             </div> */}
-            <Inventory />
+            {/* <BlockModelNew /> */}
+            {
+                <div style={{ display: show.isOpen ? "flex" : "none" }} className={css`
+               height: ${slotWidth}px;
+            `}>
+                    {
+                        times(slotsCount, (index) =>
+                            <div key={index} style={{ width: slotWidth }}>
+                                <ItemSlot
+                                    blocksPadding={9}
+                                    data={slotData}
+                                />
+                            </div>
+                        )
+                    }
+                </div>
+            }
+            {/* <Inventory />
             <CoreHUD />
-            {/* <TestMenu /> */}
-            {/* <TestKeyboard /> */}
-            {/* <Dialogs /> */}
+            <PauseMenu schema={pauseSchema} /> */}
         </AppProvider>
     </ErrorBoundary>;
 };

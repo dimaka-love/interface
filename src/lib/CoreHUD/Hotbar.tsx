@@ -8,17 +8,7 @@ import { MoreHoriz } from "@material-ui/icons";
 
 // import BlockModel from "./BlockModelOld.tsx.ignore";
 import { useLocalGameState, useTheme, useUserState, useUsingTouch } from "../state";
-import HotbarBlockModel, { blockSides } from "./HotbarBlockModel";
 import HotbarSlot from "./HotbarSlot";
-
-export type SlotData = {
-    type: "item",
-    texture: string;
-} | {
-    // doesn't support models for a moment
-    type: "block";
-    getTexture(side: (typeof blockSides)[number]): string;
-};
 
 interface ComponentProps { }
 

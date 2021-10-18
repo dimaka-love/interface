@@ -53,9 +53,9 @@ const config = {
         [
             "snowpack-svgr-plugin", {}
         ],
-        // [
-        //     "@snowpack/plugin-react-refresh", {}
-        // ]
+        [
+            "@snowpack/plugin-react-refresh", {}
+        ]
     ],
 
 };

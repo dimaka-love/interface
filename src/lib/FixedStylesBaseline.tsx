@@ -20,11 +20,12 @@ const useGlobalGeneralStyles = () => {
     return useMemo(() => {
         const styles = createGlobalGeneralStyles(theme);
         // WORKAROUND FOR MATERIAL-UI INPUTS
-        deleteProps(styles["input, textarea, select"], [
+        deleteProps(styles["input, textarea, select"]!, [
             "&:hover, &:focus"
         ]);
         // todo remove this workaround
-        styles["html, body"].fontSize = "unset";
+        styles["html, body"]!.fontSize = "unset";
+        styles["html, body"]!.userSelect = "none";
         return styles;
     }, [theme]);
 };

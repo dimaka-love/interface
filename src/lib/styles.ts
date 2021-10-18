@@ -4,7 +4,7 @@ export const zIndexes = {
     modal: 1250,
 };
 
-const css = a => a;
+const css = String.raw;
 
 export const fullScreenFixedStyles = css`
     position: fixed;
@@ -14,7 +14,7 @@ export const fullScreenFixedStyles = css`
     bottom: 0;
 `;
 
-export const modalStyles = `
+export const modalStyles = css`
     ${fullScreenFixedStyles}
     display: flex;
     justify-content: center;
@@ -35,7 +35,10 @@ export const buttonStyles = css`
     white-space: nowrap;
 `;
 
-
+export const pixelatedImage = css`
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+`;
 
 export const focusableElemOutline = css`
     outline: 2px solid dodgerblue;

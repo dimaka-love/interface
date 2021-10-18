@@ -49,22 +49,6 @@ export const useFocusController = ({ focusableElemSelector, containerRef }: UseF
     }, [focusableElemSelector]);
 };
 
-export const useModalState = (
-    /**
-     * @default false
-     */
-    initialState = false
-) => {
-    const [state, setState] = useState(initialState);
-    return useMemo(() => {
-        return {
-            isOpen: state,
-            show: () => setState(true),
-            close: () => setState(false)
-        };
-    }, [state]);
-};
-
 export const useDeviceNeedsRotation = () => {
     const orientation = useOrientation();
 
@@ -82,7 +66,7 @@ export const useDeviceNeedsRotation = () => {
         }
         // TODO-HIGH calculation
         window.innerWidth < 500 && window.innerHeight > window.innerWidth ?
-            modal.show() : modal.close();
+            modal.open() : modal.close();
     }, [orientation]);
 
     return modal.isOpen;

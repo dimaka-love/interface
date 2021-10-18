@@ -7,8 +7,9 @@ import reactUseMeasure from "react-use-measure";
 import { css } from "@emotion/css";
 import { ResizeObserver } from "@juggle/resize-observer";
 
-import type { Except } from "type-fest";
+import { pixelatedImage } from "../styles";
 
+import type { Except } from "type-fest";
 interface StylesProps {
     rotateY?: number | "animate";
     rotateX?: number,
@@ -84,8 +85,7 @@ let HotbarBlockModel: React.FC<ComponentProps> = ({
             width: 100%;
             height: 100%;
             box-sizing: content-box;
-            /* padding: ${width / 4 + 15}px; */
-            overflow: hidden;
+            position: relative;
         `)}
         ref={rootRef}
     >
@@ -121,8 +121,7 @@ let HotbarBlockModel: React.FC<ComponentProps> = ({
                                 className={css`
                                     width: 100%;
                                     height: 100%;
-                                    image-rendering: crisp-edges;
-                                    image-rendering: pixelated;
+                                    ${pixelatedImage}
                                 `}
                             />
                         </div>

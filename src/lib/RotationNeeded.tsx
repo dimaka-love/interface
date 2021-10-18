@@ -11,6 +11,7 @@ interface ComponentProps {
 let RotationNeeded: React.FC<ComponentProps> = () => {
     return <div className={css`
         ${modalStyles}
+        pointer-events: none;
     `}>
         <ScreenRotation
             color="action"

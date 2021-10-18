@@ -12,10 +12,9 @@ import { createMuiTheme, ThemeProvider as MUIThemeProvider } from "@material-ui/
 import FixedStylesBaseline from "./FixedStylesBaseline";
 import { useDeviceNeedsRotation } from "./react-util";
 import RotationNeeded from "./RotationNeeded";
-import { useSettingsStore } from "./settingsStore";
+import { useSettingsLoaded, useSettingsStore } from "./settingsStore";
 
 interface ComponentProps {
-    // canvas?:
     rootClassName?: string;
     /** override default Arwes theme settings */
     arwesThemeSettings?: Pick<React.ComponentProps<typeof ArwesThemeProvider>, "themeSettings">;
@@ -44,7 +43,10 @@ const muiTheme = createMuiTheme({
 });
 
 /** Main entrypoint for the whole library. Your app must be wrapped with this component */
-let AppProvider: React.FC<ComponentProps> = ({ children, rootClassName, arwesThemeSettings = {}, hideHudIfDeviceNeedsRotation = true }) => {
+let AppProvider: React.FC<ComponentProps> = ({
+    // UI only
+    children,
+    rootClassName, arwesThemeSettings = {}, hideHudIfDeviceNeedsRotation = true }) => {
     useEffect(() => {
         if (useSettingsStore === undefined) {
             throw new Error("Init settings store before AppProvider mount!");
@@ -52,6 +54,8 @@ let AppProvider: React.FC<ComponentProps> = ({ children, rootClassName, arwesThe
     }, []);
 
     const rotateDevice = useDeviceNeedsRotation() && hideHudIfDeviceNeedsRotation;
+
+    const settingsLoaded = useSettingsLoaded();
 
     return <ArwesThemeProvider themeSettings={{ ...arwesThemeSettings }}>
         <Helmet>
@@ -71,8 +75,11 @@ let AppProvider: React.FC<ComponentProps> = ({ children, rootClassName, arwesThe
             `)}
         >
             <MUIThemeProvider theme={muiTheme}>
-                {/* render HUD */}
-                {rotateDevice ? <RotationNeeded /> : children}
+                {
+                    // todo show popup loader
+                    !settingsLoaded ? "settings loading" :
+                        rotateDevice ? <RotationNeeded /> : children
+                }
             </MUIThemeProvider>
         </div>
     </ArwesThemeProvider>;
