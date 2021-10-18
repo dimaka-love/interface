@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
-import { Portal, Slide, Snackbar } from '@material-ui/core'
-import { Alert } from '@material-ui/lab'
+import { Portal, Slide, Snackbar } from '@mui/material'
+import { Alert } from '@mui/material';
 
 import { useUserState } from '../state'
 

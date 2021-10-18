@@ -4,7 +4,7 @@ import reactUseMeasure from 'react-use-measure'
 
 import { css } from '@emotion/css'
 import { ResizeObserver } from '@juggle/resize-observer'
-import { MoreHoriz } from '@material-ui/icons'
+import { MoreHoriz } from '@mui/icons-material'
 
 // import BlockModel from "./BlockModelOld.tsx.ignore";
 import {

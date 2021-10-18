@@ -5,7 +5,7 @@ import _ from 'lodash-es'
 import useEventListener from 'use-typed-event-listener'
 
 import { css } from '@emotion/css'
-import { ArrowRightAlt as ArrowRightAltIcon } from '@material-ui/icons'
+import { ArrowRightAlt as ArrowRightAltIcon } from '@mui/icons-material'
 
 import { dirtBlockTextureUrl } from '../../example/App'
 import ItemSlot from '../CoreHUD/ItemSlot'

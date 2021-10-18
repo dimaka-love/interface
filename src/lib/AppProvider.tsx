@@ -8,14 +8,24 @@ import { css } from '@emotion/css'
 import { Global } from '@emotion/react'
 import { CSSObject } from '@emotion/serialize'
 import {
-    createMuiTheme,
+    createTheme,
     ThemeProvider as MUIThemeProvider,
-} from '@material-ui/core/styles'
+    Theme,
+    StyledEngineProvider,
+    adaptV4Theme,
+} from '@mui/material/styles';
 
 import FixedStylesBaseline from './FixedStylesBaseline'
 import { useDeviceNeedsRotation } from './react-util'
 import RotationNeeded from './RotationNeeded'
 import { useSettingsLoaded, useSettingsStore } from './settingsStore'
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 interface ComponentProps {
     rootClassName?: string
@@ -42,11 +52,11 @@ const GLOBAL_STYLES: Record<string, CSSObject> = {
     },
 }
 
-const muiTheme = createMuiTheme({
+const muiTheme = createTheme(adaptV4Theme({
     palette: {
-        type: 'dark',
+        mode: 'dark',
     },
-})
+}))
 
 /** Main entrypoint for the whole library. Your app must be wrapped with this component */
 const AppProvider: React.FC<ComponentProps> = ({

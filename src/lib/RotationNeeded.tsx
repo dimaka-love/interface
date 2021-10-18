@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { css } from '@emotion/css'
-import { ScreenRotation } from '@material-ui/icons'
+import { ScreenRotation } from '@mui/icons-material'
 
 import { modalStyles } from './styles'
 

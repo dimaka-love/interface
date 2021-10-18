@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 
 import useTypedEventListener from 'use-typed-event-listener'
 
-import { Button, Slide, Snackbar } from '@material-ui/core'
-import { Alert } from '@material-ui/lab'
+import { Button, Slide, Snackbar } from '@mui/material'
+import { Alert } from '@mui/material';
 
 import { useUserState } from '../state'
 

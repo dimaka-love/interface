@@ -9,7 +9,7 @@ import React, {
 import { startCase } from 'lodash'
 
 import { css } from '@emotion/css'
-import { Input, MenuItem, Select, Slider, Switch } from '@material-ui/core'
+import { Input, MenuItem, Select, Slider, Switch } from '@mui/material'
 
 import { SettingField } from '../createSettings'
 

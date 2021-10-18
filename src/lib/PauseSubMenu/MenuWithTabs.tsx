@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import useEventListener from 'use-typed-event-listener'
 
 import { css } from '@emotion/css'
-import { AppBar, Tab } from '@material-ui/core'
-import { TabContext, TabList, TabPanel } from '@material-ui/lab'
+import { AppBar, Tab } from '@mui/material'
+import { TabContext, TabList, TabPanel } from '@mui/lab'
 
 export type Tab = {
     tabName: string
