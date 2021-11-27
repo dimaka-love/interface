@@ -1,0 +1,10 @@
+{
+    "extends": "../../../tsconfig.dev.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "low-level/*": ["../low-level/*"]
+        }
+    },
+    "include": [".."]
+}

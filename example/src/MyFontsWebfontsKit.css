@@ -1,0 +1,26 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 4019624, 2021-02-24T05:15:39-0500
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are
+ * explicitly restricted from using the Licensed Webfonts(s).
+ *
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: Fauna-Thin by Pasternak
+ * URL: https://www.myfonts.com/fonts/pasternak/fauna/thin/
+ * Copyright: @ Taras Pasternak 2021
+ *
+ *
+ *
+ * © 2021 MyFonts Inc
+*/
+
+
+
+
+@font-face {
+  font-family: "Fauna-Thin";
+  src: url('./webFonts/FaunaThin/font.woff2') format('woff2'), url('./webFonts/FaunaThin/font.woff') format('woff');
+}

@@ -1,4 +1,4 @@
 {
     "extends": "@zardoy/tsconfig/react",
-    "include": ["."]
+    "include": ["src", "example/src"]
 }

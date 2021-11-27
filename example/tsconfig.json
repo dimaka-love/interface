@@ -1,0 +1,11 @@
+{
+    "extends": "@zardoy/tsconfig/react",
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@dimaka/interface/*": ["../src/*"],
+            "low-level/*": ["../src/react/low-level/*"]
+        }
+    },
+    "include": ["src", "../src"]
+}

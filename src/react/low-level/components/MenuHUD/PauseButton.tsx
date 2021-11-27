@@ -1,0 +1,88 @@
+import React, { useCallback } from 'react'
+
+import { css } from '@emotion/css'
+
+import { addElemToFocus } from '../../private-state'
+import { buttonStyles, focusableElemOutline } from '../../styles'
+import { closePauseMenu } from '../../../high-level/GameHUD/PauseMenu'
+import { OpenedUI, PauseMenus } from '../../../../controller/types/openedUI'
+import { useInterfaceState } from '../../state'
+
+type ComponentProps = {
+    label: string
+    autoFocus?: boolean
+} & (
+    | {
+          action: 'close-pause'
+      }
+    | {
+          action: 'open-menu'
+          menu: Exclude<PauseMenus, 'root'>
+      }
+    | {
+          action: 'open-ui'
+          menu: OpenedUI
+      }
+    | {
+          action: 'custom'
+          closePause: boolean
+          onClick: (event: React.MouseEvent<HTMLElement>) => void
+      }
+    | {
+          action: 'disabled'
+      }
+)
+
+const PauseButton: React.FC<ComponentProps> = props => {
+    const handleClick = useCallback(
+        (e: React.MouseEvent<HTMLElement>) => {
+            switch (props.action) {
+                case 'close-pause':
+                    closePauseMenu()
+                    break
+                case 'open-menu':
+                    addElemToFocus(e.currentTarget)
+                    useInterfaceState.setState({
+                        openedUI: { type: 'pause', menu: props.menu },
+                    })
+                    break
+                case 'custom':
+                    props.onClick(e)
+                    if (props.closePause) closePauseMenu()
+                    break
+            }
+        },
+        [props.action],
+    )
+
+    return (
+        <button
+            className={css`
+                ${buttonStyles}
+                width: 300px;
+                padding: 8px;
+                margin: 3px;
+                font-size: 1.2rem;
+                font-weight: 500;
+                background: rgba(0, 0, 0, 0.6);
+                cursor: ${props.action === 'disabled'
+                    ? 'not-allowed'
+                    : 'default'};
+
+                &:hover {
+                    background: rgba(0, 0, 0, 0.7);
+                }
+                &:focus {
+                    ${focusableElemOutline}
+                }
+            `}
+            autoFocus={props.autoFocus}
+            onClick={handleClick}
+            type="button"
+        >
+            {props.label}
+        </button>
+    )
+}
+
+export default PauseButton

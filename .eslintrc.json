@@ -1,4 +1,22 @@
 {
     "extends": ["plugin:zardoy-config/react"],
-    "plugins": ["react", "react-hooks"]
+    "plugins": ["react", "react-hooks"],
+    "rules": {
+        "curly": "off",
+        "no-negated-condition": "off",
+        "default-case": "off",
+        "zardoy-config/@typescript-eslint/restrict-plus-operands": "off",
+        // TODO
+        "react/no-unescaped-entities": "off",
+        // TODO
+        "zardoy-config/unicorn/filename-case": "off",
+        "zardoy-config/@typescript-eslint/no-restricted-imports": [
+            "error",
+            {
+                "patterns": ["@mui/*", "../../src/lib/*"]
+            }
+        ],
+        "zardoy-config/import/order": "off",
+        "zardoy-config/@typescript-eslint/ban-ts-comment": "off"
+    }
 }

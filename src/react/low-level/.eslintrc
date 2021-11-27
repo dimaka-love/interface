@@ -1,0 +1,10 @@
+{
+    "rules": {
+        "zardoy-config/@typescript-eslint/no-restricted-imports": [
+            "error",
+            {
+                "patterns": ["**/high-level"]
+            }
+        ]
+    }
+}
