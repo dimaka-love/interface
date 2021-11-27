@@ -7,7 +7,7 @@
     "scripts": {
         "watch": "pnpm prepareBuild && tsc -p tsconfig.dev.json --watch --noEmit",
         "preview": "vite",
-        "build": "vite build",
+        "build": "pnpm prepareBuild && vite build",
         "storybook": "start-storybook -p 6006",
         "build-preview": "vite build",
         "lint-disabled": "eslint \"src/**/*.tsx?\"",
