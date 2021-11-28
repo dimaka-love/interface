@@ -8,7 +8,7 @@ export type SettingsMenus =
 
 export type PauseMenus = 'root' | `settings-${SettingsMenus}` | 'social'
 
-export type OpenedUI =
+export type OpenUI =
     | {
           type: 'mainMenu'
           submenu?: string

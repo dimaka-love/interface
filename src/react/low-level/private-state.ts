@@ -1,5 +1,9 @@
 import createStore from 'zustand'
 
+export const useModalOpened = createStore(() => ({
+    state: false,
+}))
+
 export const useFocusState = createStore(() => ({
     focusedElemsStack: [] as HTMLElement[],
 }))

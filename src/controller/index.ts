@@ -54,6 +54,9 @@ export const createDimakaInterfaceController = ({ settingsStore, ...requriedConf
             useSettingsStore: tempCreateStore(() => ({})),
             ...Object.fromEntries(Object.entries(settingsStore).filter(([key]) => key !== 'provider')),
         },
+        registerEventListener(event, listener) {
+            controllerInit.events[event].push(listener as any)
+        },
     }
 
     controllerInit.settingsStore.useSettingsStore.subscribe(tabsSettings => {
@@ -83,9 +86,9 @@ export const createDimakaInterfaceController = ({ settingsStore, ...requriedConf
         }
     })()
 
-    // initInterfaceState(requriedConfig)
-    const controller = defaultsDeep(controllerInit, registerControllerSetters())
-    // registerEventEmitters(controller)
+    initInterfaceState(requriedConfig)
+    Object.assign(controllerInit, registerControllerSetters())
+    registerEventEmitters(controllerInit as ControllerAPI)
 
-    return controller
+    return controllerInit as ControllerAPI
 }

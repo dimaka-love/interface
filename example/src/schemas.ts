@@ -1,7 +1,4 @@
-import {
-    createSettingsSchema,
-    menuField,
-} from '@dimaka/interface/controller/settings'
+import { createSettingsSchema, menuField } from '@dimaka/interface/controller/settings'
 import { PauseSchema } from '@dimaka/interface/react/high-level/GameHUD/PauseMenu'
 import { useInterfaceState } from '@dimaka/interface/react/low-level/state'
 import { startCase } from 'lodash-es'
@@ -15,17 +12,10 @@ const resolutionSettingsField = menuField(
     'normal',
     {
         getMenuItemLabel(label) {
-            const m =
-                label === 'reduced'
-                    ? 0.5
-                    : label === 'normal'
-                    ? 1
-                    : window.devicePixelRatio
+            const m = label === 'reduced' ? 0.5 : label === 'normal' ? 1 : window.devicePixelRatio
             const { availWidth, availHeight } = window.screen
             const mr = (n: number) => Math.floor(n * m)
-            return `${startCase(label)} (${mr(availWidth)} X ${mr(
-                availHeight,
-            )})`
+            return `${startCase(label)} (${mr(availWidth)} X ${mr(availHeight)})`
         },
     },
 )
@@ -59,11 +49,9 @@ export const pauseSchema: PauseSchema = {
         },
         {
             label: 'LEAVE WORLD',
-            action: 'custom',
-            // we're already updating openUI
-            closePause: false,
-            onClick() {
-                useInterfaceState.setState({ openedUI: { type: 'mainMenu' } })
+            action: 'open-ui',
+            menu: {
+                type: 'mainMenu',
             },
         },
     ],

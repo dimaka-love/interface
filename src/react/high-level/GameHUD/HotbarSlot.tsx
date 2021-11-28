@@ -13,7 +13,7 @@ interface ComponentProps {
 }
 
 const selectedSlotClass = css`
-    border: 4px solid white !important;
+    border-color: white !important;
 `
 
 const HotbarSlot: React.FC<ComponentProps> = ({ slotIndex, style: { blocksPadding } }) => {
@@ -28,7 +28,7 @@ const HotbarSlot: React.FC<ComponentProps> = ({ slotIndex, style: { blocksPaddin
                 'HotbarSlot',
                 css`
                     background-color: rgba(0, 0, 0, 0.5);
-                    border: 3px solid rgba(128, 128, 128, 0.8);
+                    border: 4px solid rgba(128, 128, 128, 0.8);
                     width: 100%;
                     display: inline-block;
                     position: relative;

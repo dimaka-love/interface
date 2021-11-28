@@ -9,6 +9,8 @@ import { ResizeObserver } from '@juggle/resize-observer'
 import { MoreHoriz } from '../../low-level/mui'
 import HotbarSlot from './HotbarSlot'
 import { useInterfaceState, useUsingTouch } from 'low-level/state'
+import useEventListener from 'use-typed-event-listener'
+import { useModalOpened } from 'low-level/private-state'
 
 interface ComponentProps {}
 
@@ -18,7 +20,25 @@ const Hotbar: React.FC<ComponentProps> = () => {
     const usingTouch = useUsingTouch()
     const { hotbarSlotsGap, maxHotbarSlotSize } = useInterfaceState(s => s.uiCustomization)
     const slots = useInterfaceState(s => s.hotbar.slots)
-    
+
+    const { state: modalOpened } = useModalOpened()
+
+    useEventListener(window, 'wheel', ({ deltaY: scrollDirection }) => {
+        if (modalOpened) return
+        // TODO add setting to disable this behavior
+        useInterfaceState.setState(({ hotbar }) => {
+            let newSelectedSlot = hotbar.selectedSlot + (scrollDirection > 1 ? 1 : -1)
+            if (newSelectedSlot < 0) newSelectedSlot = hotbar.slots.length - 1
+            if (newSelectedSlot > hotbar.slots.length - 1) newSelectedSlot = 0
+            return {
+                hotbar: {
+                    ...hotbar,
+                    selectedSlot: newSelectedSlot,
+                },
+            }
+        })
+    })
+
     // rewrite everything
 
     // resize observer is still bugged :(
@@ -41,11 +61,7 @@ const Hotbar: React.FC<ComponentProps> = () => {
             `}
         >
             {slots.map((_, index) => (
-                <HotbarSlot
-                    key={index}
-                    slotIndex={index}
-                    style={{ blocksPadding }}
-                />
+                <HotbarSlot key={index} slotIndex={index} style={{ blocksPadding }} />
             ))}
             {usingTouch && (
                 <div

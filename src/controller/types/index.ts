@@ -6,7 +6,7 @@ import { SettingsStore } from './settingsStore'
 import { DimakaInterfaceEvents } from './events'
 import { UiConfig, UiCustomization } from './components'
 import { DeepPartial } from 'ts-essentials'
-import { OpenedUI } from './openedUI'
+import { OpenUI } from './openedUI'
 
 export type Slot = SlotData
 
@@ -27,9 +27,7 @@ type InventoryMatrix = {
 export type PassinArgs = {
     uiConfig: UiConfig
 }
-export type OverriadbleState = DeepPartial<
-    Pick<ControllerState, 'uiCustomization'>
->
+export type OverriadbleState = DeepPartial<Pick<ControllerState, 'uiCustomization'>>
 
 // TODO
 // type ControllerWithSetters
@@ -55,11 +53,9 @@ export type ControllerState = ReadonlyDeep<
         // } | false
         // hardwareInfo: [] as HardwareInfo[],
         /** if not null - UI is open. playing game in all cases except mainMenu */
-        openedUI: OpenedUI | null
+        openedUI: OpenUI | null
         usingRawInput: true | false | null
-        cameraMoveHandler?: (
-            delta: Record<'x' | 'y', number>,
-        ) => MaybePromise<void>
+        cameraMoveHandler?: (delta: Record<'x' | 'y', number>) => MaybePromise<void>
     } & PassinArgs
 >
 
@@ -70,9 +66,7 @@ export type ControllerSetters = ReadonlyDeep<{
         replaceSlots(newSlots: Array<Slot | undefined>): void
     }
     setIsFlying(s: Partial<ControllerState['isFlying']>): void
-    registerCameraMoveHandler(
-        newHandler: ControllerState['cameraMoveHandler'],
-    ): void
+    registerCameraMoveHandler(newHandler: ControllerState['cameraMoveHandler']): void
     /**
      * @param newSlot undefined to remove slot data
      */
@@ -97,6 +91,7 @@ export interface ControllerAPIInit {
     // provider shouldn't be accessible
     settingsStore: Except<SettingsStore, 'provider'>
     init: boolean
+    registerEventListener<T extends keyof DimakaInterfaceEvents>(event: T, listener: DimakaInterfaceEvents[T]): void
 
     // This will be reused in dimaka API
     // inventory: {

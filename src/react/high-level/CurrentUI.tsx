@@ -1,8 +1,10 @@
+import { openPauseMenu } from 'low-level/components/MenuHUD/pauseMenu'
 import { useInterfaceState } from 'low-level/state'
 import React from 'react'
 import useEventListener from 'use-typed-event-listener'
+import MainMenuScreen from 'Views/MainMenuScreen'
 import GameHUD from './GameHUD/GameHUD'
-import PauseMenu, { openPauseMenu } from './GameHUD/PauseMenu'
+import PauseMenu from './GameHUD/PauseMenu'
 
 interface ComponentProps {}
 
@@ -28,6 +30,8 @@ const CurrentUI: React.FC = () => {
 
     return (
         <>
+            {/* TODO! */}
+            <MainMenuScreen buttons={[]} />
             <PauseMenu />
             <GameHUD />
         </>

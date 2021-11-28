@@ -25,9 +25,7 @@ jobs:
           version: latest
           run_install: |
             args: [--frozen-lockfile, --strict-peer-dependencies]
-      - run: pnpx -y zardoy-release node
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - run: pnpm lint
       - run: pnpm build
       - uses: peaceiris/actions-gh-pages@v3
         with:

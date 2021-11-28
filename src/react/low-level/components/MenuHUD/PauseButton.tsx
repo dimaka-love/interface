@@ -1,39 +1,11 @@
-import React, { useCallback } from 'react'
-
 import { css } from '@emotion/css'
-
+import React, { useCallback } from 'react'
 import { addElemToFocus } from '../../private-state'
-import { buttonStyles, focusableElemOutline } from '../../styles'
-import { closePauseMenu } from '../../../high-level/GameHUD/PauseMenu'
-import { OpenedUI, PauseMenus } from '../../../../controller/types/openedUI'
 import { useInterfaceState } from '../../state'
+import { buttonStyles, focusableElemOutline } from '../../styles'
+import { closePauseMenu, PauseSchemaButton } from './pauseMenu'
 
-type ComponentProps = {
-    label: string
-    autoFocus?: boolean
-} & (
-    | {
-          action: 'close-pause'
-      }
-    | {
-          action: 'open-menu'
-          menu: Exclude<PauseMenus, 'root'>
-      }
-    | {
-          action: 'open-ui'
-          menu: OpenedUI
-      }
-    | {
-          action: 'custom'
-          closePause: boolean
-          onClick: (event: React.MouseEvent<HTMLElement>) => void
-      }
-    | {
-          action: 'disabled'
-      }
-)
-
-const PauseButton: React.FC<ComponentProps> = props => {
+const PauseButton: React.FC<PauseSchemaButton> = props => {
     const handleClick = useCallback(
         (e: React.MouseEvent<HTMLElement>) => {
             switch (props.action) {
@@ -50,9 +22,14 @@ const PauseButton: React.FC<ComponentProps> = props => {
                     props.onClick(e)
                     if (props.closePause) closePauseMenu()
                     break
+                case 'open-ui':
+                    useInterfaceState.setState({ openedUI: props.menu })
+                    break
+                case 'disabled':
+                    break
             }
         },
-        [props.action],
+        [props],
     )
 
     return (
@@ -65,9 +42,7 @@ const PauseButton: React.FC<ComponentProps> = props => {
                 font-size: 1.2rem;
                 font-weight: 500;
                 background: rgba(0, 0, 0, 0.6);
-                cursor: ${props.action === 'disabled'
-                    ? 'not-allowed'
-                    : 'default'};
+                cursor: ${props.action === 'disabled' ? 'not-allowed' : 'default'};
 
                 &:hover {
                     background: rgba(0, 0, 0, 0.7);
@@ -77,8 +52,8 @@ const PauseButton: React.FC<ComponentProps> = props => {
                 }
             `}
             autoFocus={props.autoFocus}
-            onClick={handleClick}
             type="button"
+            onClick={handleClick}
         >
             {props.label}
         </button>

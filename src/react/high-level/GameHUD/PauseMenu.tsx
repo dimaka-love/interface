@@ -10,6 +10,8 @@ import useEventListener from 'use-typed-event-listener'
 import { useInterfaceState } from 'low-level/state'
 import { useFocusController } from 'low-level/reactUtil'
 import { modalStyles } from 'low-level/styles'
+import { Portal } from 'react-portal'
+import { closePauseMenu, openPauseMenu } from 'low-level/components/MenuHUD/pauseMenu'
 
 export type PauseSchema = {
     buttons: Array<React.ComponentProps<typeof PauseButton>>
@@ -32,15 +34,6 @@ export type PauseSchema = {
 //         }
 //     </div>;
 // };
-
-export const openPauseMenu = () => {
-    useInterfaceState.setState({ openedUI: { type: 'pause', menu: 'root' } })
-}
-
-export const closePauseMenu = () => {
-    useInterfaceState.setState({ openedUI: null })
-    // requestPointerLock
-}
 
 const PauseMenu: React.FC = () => {
     const uiConfig = useInterfaceState(s => s.uiConfig)
@@ -65,8 +58,7 @@ const PauseMenu: React.FC = () => {
         }
     })
 
-    const rootPauseOpened =
-        openedUI?.type === 'pause' && openedUI.menu === 'root'
+    const rootPauseOpened = openedUI?.type === 'pause' && openedUI.menu === 'root'
 
     useFocusController({
         containerRef: buttonsContainerRef,
@@ -79,31 +71,26 @@ const PauseMenu: React.FC = () => {
             <EscWarning open={escWarning.state} onClose={escWarning.off} />
 
             {openedUI?.type === 'pause' && (
-                <div
-                    ref={buttonsContainerRef}
-                    className={css`
-                        ${modalStyles}
-                        background-color: rgba(0, 0, 0, 0.3);
-                        @supports (
-                            (-webkit-backdrop-filter: blur(2em)) or
-                                (backdrop-filter: blur(2em))
-                        ) {
-                            backdrop-filter: blur(3px);
-                            background-color: transparent;
-                        }
-                        flex-direction: column;
-                    `}
-                >
-                    {uiConfig.pauseSchema.buttons.map((props, index) => (
-                        <PauseButton
-                            key={props.label}
-                            autoFocus={index === 0}
-                            {...props}
-                        />
-                    ))}
-                    {/* I will probably return back button when problem with esc is resolved (BACK BUTTON) */}
-                    <VisibleSubMenus />
-                </div>
+                <Portal>
+                    <div
+                        ref={buttonsContainerRef}
+                        className={css`
+                            ${modalStyles}
+                            background-color: rgba(0, 0, 0, 0.3);
+                            @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+                                backdrop-filter: blur(3px);
+                                background-color: transparent;
+                            }
+                            flex-direction: column;
+                        `}
+                    >
+                        {uiConfig.pauseSchema.buttons.map((props, index) => (
+                            <PauseButton key={props.label} autoFocus={index === 0} {...props} />
+                        ))}
+                        {/* I will probably return back button when problem with esc is resolved (BACK BUTTON) */}
+                        <VisibleSubMenus />
+                    </div>
+                </Portal>
             )}
         </>
     )

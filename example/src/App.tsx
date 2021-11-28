@@ -10,7 +10,7 @@ import { useModalState, ErrorBoundary } from '@zardoy/react-util'
 // import ItemSlot, { SlotData } from '@dimaka/interface/CoreHUD/ItemSlot'
 // import { PauseSchema } from '@dimaka/interface/PauseMenu/PauseMenu'
 // import { initSettingsStore } from '@dimaka/interface/settingsStore'
-import { dirtBlockTextureUrl } from '@dimaka/interface/react/low-level/components/GameHUD/BlockModel/textureSamples'
+import { bowItemTextureUrl, dirtBlockTextureUrl } from '@dimaka/interface/react/low-level/components/GameHUD/BlockModel/textureSamples'
 import { AppProvider, MainMenuScreen } from '@dimaka/interface/react/high-level'
 
 import { createDimakaInterfaceController } from '@dimaka/interface/controller'
@@ -30,22 +30,22 @@ const controller = createDimakaInterfaceController({
 })
 
 const testSlots = _.times(
-    9,
+    8,
     (): SlotData => ({
         type: 'block',
         count: 1,
         getTexture: () => dirtBlockTextureUrl,
     }),
 )
-// slots: _.times(9, (): SlotData => ({
-//     type: "item",
-//     count: 64,
-//     texture: bowItemTextureUrl
-// }))
 
-// const slotWidth = window.innerWidth / slotsCount
-
-controller.hotbar.replaceSlots(testSlots)
+controller.hotbar.replaceSlots([
+    ...testSlots,
+    {
+        type: 'item',
+        count: 64,
+        texture: bowItemTextureUrl,
+    },
+])
 
 const App: React.FC = () => {
     const show = useModalState()

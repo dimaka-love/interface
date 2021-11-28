@@ -2,52 +2,38 @@ import { useMemo } from 'react'
 import { useMedia } from 'react-use'
 import { Except } from 'type-fest'
 import createStore, { GetState, SetState } from 'zustand'
-import {
-    StoreApiWithSubscribeWithSelector,
-    subscribeWithSelector,
-} from 'zustand/middleware'
+import { StoreApiWithSubscribeWithSelector, subscribeWithSelector } from 'zustand/middleware'
 import { getInterfaceEmitter } from '../../controller/emitEvent'
-import {
-    ControllerAPI,
-    ControllerSetters,
-    ControllerState,
-    OverriadbleState,
-    PassinArgs,
-} from '../../controller/types'
+import { ControllerAPI, ControllerSetters, ControllerState, OverriadbleState, PassinArgs } from '../../controller/types'
 import { ArrayPoint, coordinateComponents } from '../vec3'
 
-export const getInitialState = (): Except<
-    ControllerState,
-    keyof PassinArgs
-> => {
-    return {
-        uiCustomization: {
-            /** if true, touch controls will be used */
-            forceTouchControls: false,
-            touchButtonSize: 50,
-            touchButtonsGap: 0,
-            hotbarSlotsGap: 0,
-            maxHotbarSlotSize: 45,
-        },
-        movement: {
-            x: 0,
-            y: 0,
-            z: 0,
-        },
-        hotbar: {
-            selectedSlot: 0,
-            slots: [],
-        },
-        isFlying: {
-            // TODO disallow these defaults
-            current: false,
-            updatable: true,
-            enabled: true,
-        },
-        openedUI: null,
-        usingRawInput: null,
-    }
-}
+export const getInitialState = (): Except<ControllerState, keyof PassinArgs> => ({
+    uiCustomization: {
+        /** if true, touch controls will be used */
+        forceTouchControls: false,
+        touchButtonSize: 50,
+        touchButtonsGap: 0,
+        hotbarSlotsGap: 0,
+        maxHotbarSlotSize: 45,
+    },
+    movement: {
+        x: 0,
+        y: 0,
+        z: 0,
+    },
+    hotbar: {
+        selectedSlot: 0,
+        slots: [],
+    },
+    isFlying: {
+        // TODO disallow these defaults
+        current: false,
+        updatable: true,
+        enabled: true,
+    },
+    openedUI: null,
+    usingRawInput: null,
+})
 
 export const useInterfaceState = createStore<
     ControllerState,
@@ -61,6 +47,7 @@ export const initInterfaceState = (data: PassinArgs & OverriadbleState) => {
 }
 
 export const registerEventEmitters = (controller: ControllerAPI) => {
+    const emitter = getInterfaceEmitter(controller)
     useInterfaceState.subscribe(
         ({ movement }) => movement,
         movement => {
@@ -72,13 +59,28 @@ export const registerEventEmitters = (controller: ControllerAPI) => {
                 }
             }
 
-            const emitter = getInterfaceEmitter(controller)
             if (movementStopped) emitter.movementStopped()
-            emitter.movementUpdated(
-                ...(coordinateComponents.map(
-                    coord => movement[coord],
-                ) as ArrayPoint),
-            )
+            emitter.movementUpdated(...(coordinateComponents.map(coord => movement[coord]) as ArrayPoint))
+        },
+    )
+    useInterfaceState.subscribe(
+        // TODO ensure is changing
+        ({ isFlying }) => isFlying.current,
+        isFlying => {
+            void emitter.isFlyingChanged(isFlying)
+        },
+    )
+    useInterfaceState.subscribe(
+        ({ hotbar }) => hotbar.selectedSlot,
+        selectedSlot => {
+            void emitter.slotSelectChanged(selectedSlot, useInterfaceState.getState().hotbar.slots[selectedSlot]!)
+        },
+    )
+    useInterfaceState.subscribe(
+        ({ hotbar }) => hotbar.slots,
+        slots => {
+            // TODO
+            // void emitter.slotUpdated(index, slot)
         },
     )
 }
@@ -126,9 +128,7 @@ export const registerControllerSetters = () => {
 }
 
 export const useUsingTouch = (): boolean => {
-    const { forceTouchControls } = useInterfaceState(
-        state => state.uiCustomization,
-    )
+    const { forceTouchControls } = useInterfaceState(state => state.uiCustomization)
     // TODO-HIGH RESOLVE CHROMIUM BUG
     const touchSupportedQuery = useMedia(`(pointer: coarse)`) // do we need to check 'ontouchstart' in window?
     // todo remove useMemo

@@ -71,8 +71,7 @@ export const EscWarning: React.FC<ComponentProps> = ({ ...snackbarProps }) => {
                 {...snackbarProps}
             >
                 <Alert severity="warning">
-                    Don't use ESC Key here. It doesn't work properly due to
-                    browser bugs.
+                    You must use ` instead of Esc due to buggy behavior in browsers.
                 </Alert>
             </Snackbar>
         </Portal>
