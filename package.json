@@ -5,9 +5,12 @@
     "author": "Vitaly Turovsky <vital2580@icloud.com>",
     "license": "MIT",
     "scripts": {
-        "watch": "pnpm prepareBuild && tsc -p tsconfig.dev.json --watch --noEmit",
+        "build": "stencil build --docs",
+        "start": "stencil build --dev --watch --serve",
+        "test": "stencil test --spec --e2e",
+        "test:watch": "stencil test --spec --e2e --watchAll",
+        "generate": "stencil generate",
         "preview": "vite",
-        "build": "pnpm prepareBuild && vite build",
         "storybook": "start-storybook -p 6006",
         "build-preview": "vite build",
         "lint": "eslint \"src/**/*.{tsx,ts}\"",
@@ -16,6 +19,7 @@
     },
     "devDependencies": {
         "@mui/material": "^5.2.1",
+        "@stencil/core": "^2.11.0",
         "@storybook/addon-interactions": "^6.4.0",
         "@storybook/jest": "^0.0.5",
         "@storybook/react": "^6.4.0",

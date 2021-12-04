@@ -15,6 +15,7 @@ specifiers:
   '@mui/material': ^5.2.1
   '@react-three/drei': ^7.22.9
   '@react-three/fiber': ^7.0.21
+  '@stencil/core': ^2.11.0
   '@storybook/addon-essentials': ^6.4.0
   '@storybook/addon-interactions': ^6.4.0
   '@storybook/addon-links': ^6.4.0
@@ -118,6 +119,7 @@ dependencies:
 
 devDependencies:
   '@mui/material': 5.2.1_e775e23d77fc33f172a6bda0cd692c92
+  '@stencil/core': 2.11.0
   '@storybook/addon-interactions': 6.4.0_e06aa02cca34d08ec4efce4186739f7e
   '@storybook/jest': 0.0.5_react-dom@17.0.2+react@17.0.2
   '@storybook/react': 6.4.0_e9c3672f6fa9c789859db8b965ae9833
@@ -2445,6 +2447,12 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.0
+    dev: true
+
+  /@stencil/core/2.11.0:
+    resolution: {integrity: sha512-/IubCWhVXCguyMUp/3zGrg3c882+RJNg/zpiKfyfJL3kRCOwe+/MD8OoAXVGdd+xAohZKIi1Ik+EHFlsptsjLg==}
+    engines: {node: '>=12.10.0', npm: '>=6.0.0'}
+    hasBin: true
     dev: true
 
   /@storybook/addon-actions/6.4.0_5539cae010396b202b015f3568914e95:

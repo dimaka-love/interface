@@ -8,8 +8,6 @@ import { useInterfaceState } from '../../../state'
 import { CircleButtonSvgr, MovementButtonSvgr } from './svgr/svg'
 import { useFixedPointerEvents } from './util'
 
-export type MovementAction = [coordinate: 'x' | 'y' | 'z', step: number]
-
 type ComponentProps = {
     action: MovementAction | MovementAction[] | ((newState: boolean) => unknown)
     /** @default true */
@@ -31,29 +29,19 @@ const touchingButtonClass = css`
     background-color: rgba(255, 255, 255, 0.1);
 `
 
-const MovementButton: React.FC<ComponentProps> = ({
-    action,
-    children,
-    DivProps,
-    Image = null,
-}) => {
+const MovementButton: React.FC<ComponentProps> = ({ action, children, DivProps, Image = null }) => {
     const [pointerEvents, touching] = useFixedPointerEvents({
         updateTouching:
             typeof action === 'function'
                 ? action
                 : newState => {
                       // unstable
-                      const movementActions =
-                          typeof action[0] === 'string'
-                              ? [action as MovementAction]
-                              : (action as MovementAction[])
+                      const movementActions = typeof action[0] === 'string' ? [action as MovementAction] : (action as MovementAction[])
 
-                      const coordsToUpdate = Object.fromEntries(
-                          movementActions.map(([coord, step]) => [
-                              coord,
-                              newState ? step : -step,
-                          ]),
-                      ) as Record<MovementAction[0], number>
+                      const coordsToUpdate = Object.fromEntries(movementActions.map(([coord, step]) => [coord, newState ? step : -step])) as Record<
+                          MovementAction[0],
+                          number
+                      >
                       useInterfaceState.setState({ movement: coordsToUpdate })
                   },
     })

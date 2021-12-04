@@ -9,31 +9,6 @@ import { useInterfaceState } from '../../../state'
 
 interface ComponentProps {}
 
-type ControlsConfig = Array<[label: string, rotate: number, movementAction: MovementAction | MovementAction[]]>
-
-export const leftControlsConfig: ControlsConfig = [
-    [
-        'wa',
-        -45,
-        [
-            ['x', -1],
-            ['z', -1],
-        ],
-    ],
-    ['w', 0, ['z', -1]],
-    [
-        'wd',
-        45,
-        [
-            ['x', 1],
-            ['z', -1],
-        ],
-    ],
-    ['d', 90, ['x', 1]],
-    ['s', 180, ['z', 1]],
-    ['a', 270, ['x', -1]],
-]
-
 interface TouchAreaProps {
     templateAreas: string[]
 }

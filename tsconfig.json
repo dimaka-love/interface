@@ -1,4 +1,23 @@
 {
-    "extends": "@zardoy/tsconfig/react",
-    "include": ["src", "example/src"]
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "noEmit": true,
+        "noEmitOnError": true,
+        "skipLibCheck": true,
+        "stripInternal": true,
+        "strict": true,
+        "noImplicitAny": false,
+        "allowUnreachableCode": true,
+        "noImplicitReturns": true,
+        "noImplicitOverride": true,
+        "forceConsistentCasingInFileNames": true,
+        "jsxFactory": "h"
+    },
+    "include": ["src/webcomponents"],
+    "exclude": ["**/*.stories.tsx", "storybook.ts"]
 }
