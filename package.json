@@ -18,6 +18,7 @@
         "prepareBuild": "svgr src/react/low-level/components/GameHUD/TouchControls --typescript --out-dir src/react/low-level/components/GameHUD/TouchControls/svgr",
         "build-next": "pnpm prepareBuild && tsc -p tsconfig.prod.json --watch"
     },
+    "main": "build/index.js",
     "files": [
         "build"
     ],
@@ -48,12 +49,7 @@
         "typed-query-selector": "^2.6.1",
         "typescript": "^4.5.2",
         "vite": "^4.4.9",
-        "vite-tsconfig-paths": "^3.3.17"
-    },
-    "peerDependencies": {
-        "react": "^17.0.2"
-    },
-    "dependencies": {
+        "vite-tsconfig-paths": "^3.3.17",
         "@arwes/animation": "^1.0.0-alpha.19",
         "@arwes/core": "^1.0.0-alpha.19",
         "@arwes/design": "^1.0.0-alpha.19",
@@ -101,6 +97,10 @@
         "vite-plugin-svgr": "^3.2.0",
         "zustand": "^3.6.5"
     },
+    "peerDependencies": {
+        "react": "^17.0.2"
+    },
+    "dependencies": {},
     "pnpm": {
         "neverBuiltDependencies": [
             "mineflayer-web-inventory"

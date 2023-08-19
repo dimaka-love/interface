@@ -27,10 +27,11 @@ const result = await build({
     },
     entryPoints: ['./src/react/'],
     outfile: 'build/index.js',
+    sourcemap: 'external',
     loader: {
         '.png': 'dataurl',
     },
-    external: [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.devDependencies || {})],
+    external: [...Object.keys(pkg.peerDependencies || {})],
     format: 'esm',
     metafile: true,
     plugins: [svgrPlugin()],
