@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 export const releasePointerCapture = (e: React.PointerEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     const target = e.target as HTMLElement
     if (!target.releasePointerCapture) return
     target.releasePointerCapture(e.pointerId)
@@ -21,21 +22,15 @@ type ToggleIsTouching = (...args: [true, Event] | [false, Event?]) => void
 // TODO: refactoring required!
 
 // TODO: only works with one level depth
-export const useFixedPointerEvents = (
-    props: HookParams,
-): [React.ComponentProps<'div'>, boolean] => {
+export const useFixedPointerEvents = (props: HookParams): [React.ComponentProps<'div'>, boolean] => {
     const [touching, setTouching] = useState(false)
 
     const toggleIsTouching = useCallback(
         ((newState, event) => {
             if (touching === newState) return
+            event?.stopPropagation()
             const relatedTarget = event?.relatedTarget as HTMLElement
-            if (
-                event &&
-                event.type === 'pointerout' &&
-                relatedTarget?.parentElement === event.currentTarget
-            )
-                return
+            if (event && event.type === 'pointerout' && relatedTarget?.parentElement === event.currentTarget) return
             const { updateTouching, startTouching, stopTouching } = props
             setTouching(newState)
             updateTouching?.(newState)
@@ -47,18 +42,13 @@ export const useFixedPointerEvents = (
     useEffect(() => {
         if (!touching) return
         // still could be buggy
-        const removeTouchIfHidden = () =>
-            document.visibilityState === 'hidden' && toggleIsTouching(false)
-        const onTouchEnd = (e: TouchEvent) =>
-            e.touches.length === 0 && toggleIsTouching(false)
+        const removeTouchIfHidden = () => document.visibilityState === 'hidden' && toggleIsTouching(false)
+        const onTouchEnd = (e: TouchEvent) => e.touches.length === 0 && toggleIsTouching(false)
         document.addEventListener('visibilitychange', removeTouchIfHidden)
         // in case of other Safari bugs
         document.documentElement.addEventListener('touchend', onTouchEnd)
         return () => {
-            document.removeEventListener(
-                'visibilitychange',
-                removeTouchIfHidden,
-            )
+            document.removeEventListener('visibilitychange', removeTouchIfHidden)
             document.documentElement.removeEventListener('touchend', onTouchEnd)
         }
     }, [touching, toggleIsTouching])
@@ -74,6 +64,10 @@ export const useFixedPointerEvents = (
             onPointerCancel: e => toggleIsTouching(false, e),
             // for tablets on windows
             onContextMenu: e => e.preventDefault(),
+            onTouchMove: e => e.stopPropagation(),
+            onTouchStart: e => e.stopPropagation(),
+            onTouchEnd: e => e.stopPropagation(),
+            onTouchCancel: e => e.stopPropagation(),
         },
         touching,
     ]

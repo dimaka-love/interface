@@ -13,6 +13,31 @@ interface TouchAreaProps {
     templateAreas: string[]
 }
 
+type ControlsConfig = Array<[label: string, rotate: number, movementAction: MovementAction | MovementAction[]]>
+
+export const leftControlsConfig: ControlsConfig = [
+    [
+        'wa',
+        -45,
+        [
+            ['x', -1],
+            ['z', -1],
+        ],
+    ],
+    ['w', 0, ['z', -1]],
+    [
+        'wd',
+        45,
+        [
+            ['x', 1],
+            ['z', -1],
+        ],
+    ],
+    ['d', 90, ['x', 1]],
+    ['s', 180, ['z', 1]],
+    ['a', 270, ['x', -1]],
+]
+
 // IOS safari bug: select element dev feature fires touch/pointer events and doesn't fire cancel/end event! So, it's posiible to accomplish the state where app thinks that user holds button but he's actually not!
 // there is no workaround for this now.
 

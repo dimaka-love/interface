@@ -46,26 +46,26 @@ const AppProvider: React.FC<AppProviderProps> = ({ canvasEl, rootClassName, cont
     const uiConfig = useInterfaceState(s => s.uiConfig)
     const openedUI = useInterfaceState(s => s.openedUI)
     // TODO make with percent
-    const isLoading = useModalState(true)
+    const isLoading = useModalState(false)
 
     const rotationNeeded = useDeviceNeedsRotation() && uiConfig.hideHudIfDeviceNeedsRotation
 
-    useEffect(() => {
-        controller.init = true
-        for (const cb of controller._initSubscribers.app) {
-            cb()
-        }
+    // useEffect(() => {
+    //     controller.init = true
+    //     for (const cb of controller._initSubscribers.app) {
+    //         cb()
+    //     }
 
-        controller._onDidSettingsInit(() => isLoading.close())
-    }, [])
+    //     controller._onDidSettingsInit(() => isLoading.close())
+    // }, [])
 
     return (
         <>
-            <Helmet>
+            {/* todo */}
+            {/* <Helmet>
                 <link rel="preconnect" href="https://fonts.gstatic.com" />
-                {/* TODO HOT! */}
                 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap" rel="stylesheet" />
-            </Helmet>
+            </Helmet> */}
             <ArwesProvider>
                 <GlobalStyles />
             </ArwesProvider>

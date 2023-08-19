@@ -78,7 +78,7 @@ export type ControllerSetters = ReadonlyDeep<{
  */
 export interface ControllerAPIInit {
     /** @internal */
-    _settingsStoreProvider: SettingsStore['provider']
+    // _settingsStoreProvider: SettingsStore['provider']
     /**
      * settings - internal only
      * @internal
@@ -89,7 +89,7 @@ export interface ControllerAPIInit {
         [K in keyof DimakaInterfaceEvents]: Array<DimakaInterfaceEvents[K]>
     }
     // provider shouldn't be accessible
-    settingsStore: Except<SettingsStore, 'provider'>
+    settingsStore: Except<SettingsStore, 'provider' | 'getValue' | 'schema'>
     init: boolean
     registerEventListener<T extends keyof DimakaInterfaceEvents>(event: T, listener: DimakaInterfaceEvents[T]): void
 
@@ -114,7 +114,7 @@ export interface ControllerAPIInit {
     _onDidSettingsInit(cb: () => any)
 
     /** Functions added after init will be executed emmideately */
-    onDidInit(fn: () => any): void
+    // onDidInit(fn: () => any): void
     // TODO special promise type
 }
 // TODO enable state
@@ -127,5 +127,5 @@ export type ControllerAPI = ControllerAPIInit & ControllerSetters
 // >
 
 export interface CreateControllerParams extends PassinArgs, OverriadbleState {
-    settingsStore: Pick<SettingsStore, 'provider' | 'schema'>
+    settingsStore?: Pick<SettingsStore, 'provider' | 'schema'>
 }

@@ -43,7 +43,7 @@ const Hotbar: React.FC<ComponentProps> = () => {
 
     // resize observer is still bugged :(
     const { blocksPadding } = useMemo(() => {
-        const blocksPadding = width < 200 ? 0 : width < 350 ? 5 : 8
+        const blocksPadding = width < 200 ? 0 : width < 350 ? 5 : 6
         return { blocksPadding }
     }, [width])
 

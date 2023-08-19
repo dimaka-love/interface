@@ -37,22 +37,20 @@ export const createDimakaInterfaceController = ({ settingsStore, ...requriedConf
             if (controllerInit.settingsStore.resolvedConfig) cb()
             else controllerInit._initSubscribers.settings.push(cb)
         },
-        _settingsStoreProvider: settingsStore.provider,
+        // _settingsStoreProvider: settingsStore.provider,
         inventory: {
             hotbar: {
                 slots: [],
                 replaceSlots(slots) {
-                    //@ts-expect-error
                     controllerInit.inventory.hotbar.slots = slots
                 },
             },
         },
         // lodash-marker
-        //@ts-expect-error TODO I don't understand the error
         settingsStore: {
             resolvedConfig: undefined,
             useSettingsStore: tempCreateStore(() => ({})),
-            ...Object.fromEntries(Object.entries(settingsStore).filter(([key]) => key !== 'provider')),
+            // ...Object.fromEntries(Object.entries(settingsStore).filter(([key]) => key !== 'provider')),
         },
         registerEventListener(event, listener) {
             controllerInit.events[event].push(listener as any)
@@ -63,28 +61,28 @@ export const createDimakaInterfaceController = ({ settingsStore, ...requriedConf
         const settignsGroupsParsed = mapValues(tabsSettings, (groupedSettings, tabName) =>
             mapValues(groupedSettings, (settingsList, groupName) =>
                 filterValues(settingsList, (key, value) => {
+                    //@ts-ignore todo
                     const settingSchema = controllerInit.settingsStore.schema[tabName]![groupName]![key]!
                     if (!('defaultValue' in settingSchema)) return false
-                    //@ts-expect-error TODO resolve it
                     return settingSchema.defaultValue !== value
                 }),
             ),
         )
         // remove groups with no settings
         const newUserConfig = omitBy(settignsGroupsParsed, group => Object.keys(group).length === 0)
-        controllerInit._settingsStoreProvider.saveConfig?.(newUserConfig)
+        // controllerInit._settingsStoreProvider.saveConfig?.(newUserConfig)
         // TODO save property
     })
 
-    void (async () => {
-        const data = await settingsStore.provider.load()
-        controllerInit.settingsStore.resolvedConfig = data
-        controllerInit.settingsStore.useSettingsStore.setState(data)
-        // TODO
-        for (const cb of controllerInit._initSubscribers.settings) {
-            cb()
-        }
-    })()
+    // void (async () => {
+    //     const data = await settingsStore.provider.load()
+    //     controllerInit.settingsStore.resolvedConfig = data
+    //     controllerInit.settingsStore.useSettingsStore.setState(data)
+    //     // TODO
+    //     for (const cb of controllerInit._initSubscribers.settings) {
+    //         cb()
+    //     }
+    // })()
 
     initInterfaceState(requriedConfig)
     Object.assign(controllerInit, registerControllerSetters())

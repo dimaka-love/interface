@@ -8,7 +8,8 @@ const emitInterfaceEvent = <E extends keyof DimakaInterfaceEvents>(
 ) => {
     let returnsFalse = false
     for (const event of controller.events[eventName]) {
-        if (event(...(args as [any, any])) === false) returnsFalse = true
+        //@ts-ignore
+        if (event(...args) === false) returnsFalse = true
     }
 
     // of course this will be removed and in final release we will use e.preventDefault

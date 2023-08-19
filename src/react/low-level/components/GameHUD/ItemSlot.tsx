@@ -15,7 +15,7 @@ export type SlotData = {
     | {
           // doesn't support models for a moment
           type: 'block'
-          getTexture(side: typeof blockSides[number]): string
+          getTexture(side: (typeof blockSides)[number]): string
       }
 )
 
@@ -24,15 +24,9 @@ type ComponentProps = {
     blocksPadding: number
 }
 
-const ItemSlot: React.FC<ComponentProps> = ({
-    blocksPadding,
-    data: rawSlotData,
-}) => {
+const ItemSlot: React.FC<ComponentProps> = ({ blocksPadding, data: rawSlotData }) => {
     // todo refactor
-    const fontSize = useMemo(
-        () => (blocksPadding <= 6 ? 10 : 15),
-        [blocksPadding],
-    )
+    const fontSize = useMemo(() => (blocksPadding <= 6 ? 10 : 15), [blocksPadding])
 
     const slotData = useMemo(() => {
         if (!rawSlotData) return null
@@ -40,9 +34,7 @@ const ItemSlot: React.FC<ComponentProps> = ({
 
         return {
             ...rawSlotData,
-            sideTextures: Object.fromEntries(
-                blockSides.map(side => [side, rawSlotData.getTexture(side)]),
-            ) as Record<BlockSide, string>,
+            sideTextures: Object.fromEntries(blockSides.map(side => [side, rawSlotData.getTexture(side)])) as Record<BlockSide, string>,
         }
     }, [rawSlotData])
 

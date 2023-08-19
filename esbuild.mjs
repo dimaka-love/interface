@@ -12,6 +12,7 @@ import { readPackageJsonFile } from 'typed-jsonfile'
 const pkg = await readPackageJsonFile({ dir: '.' })
 
 /** @type {"dev" | "prod" | "prod-min"} */
+// @ts-ignore
 const mode = process.argv[2] || 'prod'
 
 const NODE_ENV = mode === 'dev' ? 'development' : 'production'
@@ -24,20 +25,18 @@ const result = await build({
         'import.meta.env.NODE_ENV': `"${NODE_ENV}"`,
         'process.env.NODE_ENV': `"${NODE_ENV}"`,
     },
-    entryPoints: ['src/react/mui2.tsx'],
-    outfile: 'build/mui.js',
-    external: [
-        ...Object.keys(pkg.peerDependencies || {}),
-        ...Object.keys(pkg.dependencies || {}),
-    ],
+    entryPoints: ['./src/react/'],
+    outfile: 'build/index.js',
+    loader: {
+        '.png': 'dataurl',
+    },
+    external: [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.devDependencies || {})],
     format: 'esm',
     metafile: true,
     plugins: [svgrPlugin()],
 })
 
-console.log(
-    'Output size',
-    filesize(Object.entries(result.metafile.outputs)[0][1].bytes),
-)
+// @ts-ignore
+console.log('Output size', filesize(Object.entries(result.metafile.outputs)[0][1].bytes))
 
-writeFile('esbuild-out/meta-deps.json', JSON.stringify(result.metafile))
+writeFile('build/meta-deps.json', JSON.stringify(result.metafile))

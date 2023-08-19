@@ -8,7 +8,6 @@ type SettingSchemaFieldTypes =
           values: Record<string, SettingLabel | true>
           defaultValue: string
           /** overrides label for **every** menu item, so when this is specified pass true in values */
-          // TODODO FDLKSFMSD.KMFSDLFDSKL; WHHY STRING DOEESNT work
           getMenuItemLabel?: (label: any) => string
       }
     | {
@@ -53,13 +52,9 @@ export type TabSettingsSchema = {
     }
 }
 
-export const createSettingsSchema = <T extends TabSettingsSchema>(params: T) =>
-    params
+export const createSettingsSchema = <T extends TabSettingsSchema>(params: T) => params
 
-export const menuField = <
-    K extends Record<string, SettingLabel | true>,
-    T extends keyof K,
->(
+export const menuField = <K extends Record<string, SettingLabel | true>, T extends keyof K>(
     valuesToLabelMap: K,
     defaultValue: T,
     additionalProperties: CommonSettingFields & {

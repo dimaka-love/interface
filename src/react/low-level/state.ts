@@ -15,6 +15,8 @@ export const getInitialState = (): Except<ControllerState, keyof PassinArgs> => 
         touchButtonsGap: 0,
         hotbarSlotsGap: 0,
         maxHotbarSlotSize: 45,
+        touchTimeToDropItem: 600,
+        touchTimeToDropItemStack: 1500,
     },
     movement: {
         x: 0,

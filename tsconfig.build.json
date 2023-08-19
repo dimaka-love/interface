@@ -1,0 +1,13 @@
+{
+    "extends": "./src/react/tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "declaration": true,
+        "skipLibCheck": true,
+        "moduleResolution": "Node",
+        "outDir": "build"
+    },
+    "include": [
+        "src/react/index.ts"
+    ]
+}

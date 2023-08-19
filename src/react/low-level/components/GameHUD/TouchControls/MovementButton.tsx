@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import clsx from 'clsx'
 
 import { css } from '@emotion/css'
 
 import { useInterfaceState } from '../../../state'
-import { CircleButtonSvgr, MovementButtonSvgr } from './svgr/svg'
+import _MovementButtonSvgr from './svg/MovementButton.svgr.svg'
+import _CircleButtonSvgr from './svg/CircleButton.svgr.svg'
 import { useFixedPointerEvents } from './util'
 
+const MovementButtonSvgr = _MovementButtonSvgr.ReactComponent ? _MovementButtonSvgr.ReactComponent : _MovementButtonSvgr
+const CircleButtonSvgr = _CircleButtonSvgr.ReactComponent ? _CircleButtonSvgr.ReactComponent : _CircleButtonSvgr
+
+type CoordinateComponent = 'x' | 'y' | 'z'
+export type MovementAction = [coordinate: CoordinateComponent, step: number]
 type ComponentProps = {
     action: MovementAction | MovementAction[] | ((newState: boolean) => unknown)
     /** @default true */
@@ -38,7 +44,7 @@ const MovementButton: React.FC<ComponentProps> = ({ action, children, DivProps, 
                       // unstable
                       const movementActions = typeof action[0] === 'string' ? [action as MovementAction] : (action as MovementAction[])
 
-                      const coordsToUpdate = Object.fromEntries(movementActions.map(([coord, step]) => [coord, newState ? step : -step])) as Record<
+                      const coordsToUpdate = Object.fromEntries(movementActions.map(([coord, step]) => [coord, newState ? step : 0])) as Record<
                           MovementAction[0],
                           number
                       >

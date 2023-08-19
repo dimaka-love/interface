@@ -1,15 +1,16 @@
 {
-    "name": "interface",
+    "name": "@dimaka/interface",
     "displayName": "Interface",
     "version": "0.0.0-dev",
     "author": "Vitaly Turovsky <vital2580@icloud.com>",
     "license": "MIT",
     "scripts": {
-        "build": "stencil build --docs",
-        "start": "stencil build --dev --watch --serve",
-        "test": "stencil test --spec --e2e",
-        "test:watch": "stencil test --spec --e2e --watchAll",
-        "generate": "stencil generate",
+        "build": "tsc -p tsconfig.build.json && node esbuild.mjs",
+        "build-stencil": "stencil build --docs",
+        "start-stencil": "stencil build --dev --watch --serve",
+        "test-stencil": "stencil test --spec --e2e",
+        "test:watch-stencil": "stencil test --spec --e2e --watchAll",
+        "generate-stencil": "stencil generate",
         "preview": "vite",
         "storybook": "start-storybook -p 6006",
         "build-preview": "vite build",
@@ -17,6 +18,9 @@
         "prepareBuild": "svgr src/react/low-level/components/GameHUD/TouchControls --typescript --out-dir src/react/low-level/components/GameHUD/TouchControls/svgr",
         "build-next": "pnpm prepareBuild && tsc -p tsconfig.prod.json --watch"
     },
+    "files": [
+        "build"
+    ],
     "devDependencies": {
         "@mui/material": "^5.2.1",
         "@stencil/core": "^2.11.0",
@@ -43,7 +47,7 @@
         "typed-jsonfile": "^0.2.0",
         "typed-query-selector": "^2.6.1",
         "typescript": "^4.5.2",
-        "vite": "^2.6.14",
+        "vite": "^4.4.9",
         "vite-tsconfig-paths": "^3.3.17"
     },
     "peerDependencies": {
@@ -66,6 +70,7 @@
         "@storybook/addon-essentials": "^6.4.0",
         "@storybook/addon-links": "^6.4.0",
         "@types/react-router-dom": "^5.3.2",
+        "@vitejs/plugin-react": "^4.0.4",
         "@web/test-runner": "^0.13.22",
         "@zardoy/react-util": "^0.1.1",
         "@zardoy/tsconfig": "^1.2.2",
@@ -78,6 +83,7 @@
         "immer": "^9.0.7",
         "lodash-es": "^4.17.21",
         "material-ui-popup-state": "^2.0.0",
+        "mineflayer-web-inventory": "^1.8.4",
         "polished": "^4.1.3",
         "prop-types": "^15.7.2",
         "react": "^17.0.2",
@@ -92,7 +98,13 @@
         "ts-essentials": "^9.0.0",
         "use-typed-event-listener": "^3.0.0",
         "vec3": "^0.1.7",
+        "vite-plugin-svgr": "^3.2.0",
         "zustand": "^3.6.5"
+    },
+    "pnpm": {
+        "neverBuiltDependencies": [
+            "mineflayer-web-inventory"
+        ]
     },
     "browserslist": [
         "defaults",

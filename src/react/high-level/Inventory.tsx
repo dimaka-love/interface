@@ -27,10 +27,7 @@ interface InventorySlotsProps {
     size: number
 }
 
-const InventorySlots: React.FC<InventorySlotsProps> = ({
-    direction = 'row',
-    size,
-}) => (
+const InventorySlots: React.FC<InventorySlotsProps> = ({ direction = 'row', size }) => (
     <div
         className={css`
             /* display: grid;
@@ -75,13 +72,10 @@ const InventorySlots: React.FC<InventorySlotsProps> = ({
     </div>
 )
 
-const ArmorSlots: React.FC<{ side: 'left' | 'right' }> = ({ side }) => (
-    <InventorySlots direction="column" size={4} />
-)
+const ArmorSlots: React.FC<{ side: 'left' | 'right' }> = ({ side }) => <InventorySlots direction="column" size={4} />
 
 const Inventory: React.FC<ComponentProps> = () => {
     const openedUI = useInterfaceState(s => s.openedUI)
-
     const inventoryOpened = openedUI?.type === 'inventory'
 
     useEventListener(window, 'keydown', ({ code }) => {
@@ -91,7 +85,8 @@ const Inventory: React.FC<ComponentProps> = () => {
         else useInterfaceState.setState({ openedUI: { type: 'inventory' } })
     })
 
-    return !inventoryOpened ? null : (
+    if (!inventoryOpened) return null
+    return (
         <div
             className={css`
                 ${modalStyles}
@@ -159,10 +154,7 @@ const Inventory: React.FC<ComponentProps> = () => {
                                 <InventorySlots size={2} />
                                 <InventorySlots size={2} />
                             </div>
-                            <ArrowRightAltIcon
-                                style={{ width: slotSize, height: slotSize }}
-                                color="action"
-                            />
+                            <ArrowRightAltIcon style={{ width: slotSize, height: slotSize }} color="action" />
                             <div
                                 className={css`
                                     display: flex;

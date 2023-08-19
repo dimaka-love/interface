@@ -1,9 +1,12 @@
 {
-    "extends": "./tsconfig.prod.json",
+    "extends": "./tsconfig.json",
     "compilerOptions": {
-        "declarationMap": true,
+        // "declarationMap": true,
         "noEmit": true,
         "sourceMap": true
     },
-    "include": ["src", "example/src/App.tsx"]
+    "include": [
+        "src",
+        "example/src/App.tsx"
+    ]
 }

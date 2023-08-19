@@ -1,0 +1,15 @@
+{
+    "extends": "@zardoy/tsconfig/react",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "low-level/*": [
+                "./low-level/*"
+            ]
+        },
+        "jsx": "react-jsx",
+    },
+    "include": [
+        "."
+    ]
+}

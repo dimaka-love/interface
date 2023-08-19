@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import clsx from 'clsx'
 
 import { css } from '@emotion/css'
 
 import ItemSlot from 'low-level/components/GameHUD/ItemSlot'
-import { useInterfaceState } from 'low-level/state'
+import { useInterfaceState, useUsingTouch } from 'low-level/state'
 
 interface ComponentProps {
     slotIndex: number
@@ -13,12 +13,28 @@ interface ComponentProps {
 }
 
 const selectedSlotClass = css`
-    border-color: white !important;
+    /* border-color: #eef4ecb5 !important; */
+    outline: 5px solid #eef4ec !important;
+    z-index: 1;
 `
+
+const setSlot = index => {
+    useInterfaceState.setState(({ hotbar }) => {
+        return {
+            hotbar: {
+                ...hotbar,
+                selectedSlot: index,
+            },
+        }
+    })
+}
 
 const HotbarSlot: React.FC<ComponentProps> = ({ slotIndex, style: { blocksPadding } }) => {
     const slotsData = useInterfaceState(state => state.hotbar.slots)
     const selectedSlot = useInterfaceState(state => state.hotbar.selectedSlot)
+    const touchTimeToDropItem = useInterfaceState(state => state.uiCustomization.touchTimeToDropItem)
+    const [touchStart, setTouchStart] = useState(null as number | null)
+    const usingTouch = useUsingTouch()
 
     const slotData = useMemo(() => slotsData[slotIndex], [slotsData, slotIndex])
 
@@ -45,6 +61,18 @@ const HotbarSlot: React.FC<ComponentProps> = ({ slotIndex, style: { blocksPaddin
             />
             {slotData && (
                 <div
+                    onPointerDown={e => {
+                        if (touchStart || !usingTouch) return
+                        setTouchStart(Date.now())
+                    }}
+                    onPointerUp={() => {
+                        // todo we have utils to do it right (globally)
+                        if (!touchStart) return
+                        const time = Date.now() - touchStart
+                        setTouchStart(null)
+                        if (time > touchTimeToDropItem) return
+                        setSlot(slotIndex)
+                    }}
                     className={css`
                         position: absolute;
                         top: 0;
