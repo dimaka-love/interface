@@ -48,6 +48,9 @@ const MovementButton: React.FC<ComponentProps> = ({ action, children, DivProps, 
                           MovementAction[0],
                           number
                       >
+                      //   todo document or change impl
+                      //@ts-ignore
+                      useInterfaceState.getState().updateCoord?.(Object.entries(coordsToUpdate)[0])
                       useInterfaceState.setState({ movement: coordsToUpdate })
                   },
     })
