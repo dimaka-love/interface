@@ -18,6 +18,7 @@ import { pauseSchema, settingsSchema } from './schemas'
 import { settingsProvider } from './settings'
 import { useInterfaceState } from '@dimaka/interface/react/low-level/state'
 import { SlotData } from '@dimaka/interface/react/low-level/components/GameHUD/ItemSlot'
+import InventoryNew from '@dimaka/interface/react/high-level/InventoryNew'
 
 const controller = createDimakaInterfaceController({
     settingsStore: {
@@ -64,6 +65,7 @@ const App: React.FC = () => {
                 `}
                 canvasEl={<></>}
             />
+            {/* <InventoryNew /> */}
             {/* <div style={{
                 width: 200,
                 height: 200,

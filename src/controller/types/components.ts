@@ -16,6 +16,8 @@ export interface UiCustomization {
     touchButtonsGap: number
     hotbarSlotsGap: number
     maxHotbarSlotSize: number
+    touchTimeToDropItem: number
+    touchTimeToDropItemStack: number
 }
 
 // Future API

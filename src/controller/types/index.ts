@@ -103,6 +103,13 @@ export interface ControllerAPIInit {
     //     /** Update all slots */
     // } & SlotManipulator
 
+    inventory: {
+        hotbar: {
+            slots: Slot[]
+            replaceSlots(slots: Slot[]): void
+        }
+    }
+
     /** @internal */
     _onDidSettingsInit(cb: () => any)
 
