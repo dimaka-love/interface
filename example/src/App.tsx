@@ -48,6 +48,22 @@ controller.hotbar.replaceSlots([
     },
 ])
 
+window['mcData'] = {
+    itemsByName: {
+        dirt: {
+            name: 'dirt',
+            displayName: 'Dirt',
+            stackSize: 64,
+        },
+    },
+    blocksByName: {
+        dirt: {},
+    },
+}
+window['mcAssets'] = {
+    blocksModels: {},
+}
+
 const App: React.FC = () => {
     const show = useModalState()
 
@@ -65,7 +81,7 @@ const App: React.FC = () => {
                 `}
                 canvasEl={<></>}
             />
-            {/* <InventoryNew /> */}
+            <InventoryNew slots={[]} action={() => {}} />
             {/* <div style={{
                 width: 200,
                 height: 200,

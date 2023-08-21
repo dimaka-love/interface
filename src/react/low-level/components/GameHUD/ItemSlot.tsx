@@ -21,10 +21,10 @@ export type SlotData = {
 
 type ComponentProps = {
     data: SlotData | null
-    blocksPadding: number
+    blocksPadding?: number
 }
 
-const ItemSlot: React.FC<ComponentProps> = ({ blocksPadding, data: rawSlotData }) => {
+const ItemSlot: React.FC<ComponentProps> = ({ blocksPadding = 9, data: rawSlotData }) => {
     // todo refactor
     const fontSize = useMemo(() => (blocksPadding <= 6 ? 10 : 15), [blocksPadding])
 

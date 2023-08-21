@@ -2,11 +2,15 @@ import { css } from '@emotion/css'
 import inventorySlots from './inventorySlots'
 import { useInterfaceState } from 'low-level/state'
 import chestImage from 'mineflayer-web-inventory/client/public/windows/chest.png'
+import craftingTablePng from 'mineflayer-web-inventory/client/public/windows/crafting-table.png'
 import inventoryImage from 'mineflayer-web-inventory/client/public/windows/inventory.png'
+import SlotMovable, { DraggingSlot } from './SlotMovable'
 
 const slotsPos = inventorySlots()
 
-export default ({ onClose = undefined }) => {
+export type UiType = 'inventory' | 'chest' | 'large-chest' | 'crafting-table' | 'furnace'
+
+export default ({ onClose = undefined as any, slots, action, ui = 'inventory' as UiType }) => {
     return (
         <div
             className={css`
@@ -19,15 +23,16 @@ export default ({ onClose = undefined }) => {
             `}
         >
             <div
+                onClick={e => e.target === e.currentTarget && onClose?.(e)}
                 className={css`
-                    background-image: url(${inventoryImage});
+                    background-image: url(${ui === 'inventory' ? inventoryImage : ui === 'crafting-table' ? craftingTablePng : chestImage});
                     background-size: cover;
                     width: 352px;
                     height: 332px;
                     position: relative;
                 `}
             >
-                {Object.entries(slotsPos.inventory).map(([slot, [x, y]], i) => (
+                {Object.entries(slotsPos[ui]).map(([slot, [x, y]], i) => (
                     <div
                         key={i}
                         className={css`
@@ -39,9 +44,20 @@ export default ({ onClose = undefined }) => {
                                 background-color: rgba(255, 255, 255, 0.5);
                             }
                         `}
-                    ></div>
+                    >
+                        <SlotMovable
+                            item={slots[i]}
+                            action={{
+                                drag: {
+                                    onMoved: action,
+                                    index: i,
+                                },
+                            }}
+                        />
+                    </div>
                 ))}
             </div>
+            <DraggingSlot />
         </div>
     )
 }
