@@ -8,6 +8,12 @@ neverBuiltDependencies:
   - mineflayer-web-inventory
 
 dependencies:
+  minecraft-assets:
+    specifier: ^1.9.1
+    version: 1.9.1
+  minecraft-data:
+    specifier: '*'
+    version: 3.42.1
   react-popper:
     specifier: ^2.3.0
     version: 2.3.0(@popperjs/core@2.11.8)(react-dom@18.2.0)(react@18.2.0)
@@ -3450,7 +3456,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 16.11.10
+      '@types/node': 20.5.1
       '@types/yargs': 16.0.5
       chalk: 4.1.2
     dev: true
@@ -6169,7 +6175,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 3.0.5
-      '@types/node': 14.18.54
+      '@types/node': 20.5.1
     dev: true
 
   /@types/graceful-fs@4.1.5:
@@ -6305,7 +6311,7 @@ packages:
   /@types/node-fetch@2.5.12:
     resolution: {integrity: sha512-MKgC4dlq4kKNa/mYrwpKfzQMB5X3ee5U6fSprkKpToBqBmX4nFZL9cW5jl6sWn+xpRJ7ypWh2yyqqr8UUCstSw==}
     dependencies:
-      '@types/node': 14.18.54
+      '@types/node': 20.5.1
       form-data: 3.0.1
     dev: true
 
@@ -6475,7 +6481,7 @@ packages:
   /@types/webpack-sources@3.2.0:
     resolution: {integrity: sha512-Ft7YH3lEVRQ6ls8k4Ff1oB4jN6oy/XmU6tQISKdhfh+1mR+viZFphS6WL0IrtDOzvefmJg5a0s7ZQoRXwqTEFg==}
     dependencies:
-      '@types/node': 14.18.54
+      '@types/node': 20.5.1
       '@types/source-list-map': 0.1.2
       source-map: 0.7.3
     dev: true
@@ -6483,7 +6489,7 @@ packages:
   /@types/webpack@4.41.32:
     resolution: {integrity: sha512-cb+0ioil/7oz5//7tZUSwbrSAN/NWHrQylz5cW8G0dWTcF/g+/dSdMlKVZspBYuMAN1+WnwHrkxiRrLcwd0Heg==}
     dependencies:
-      '@types/node': 14.18.54
+      '@types/node': 20.5.1
       '@types/tapable': 1.0.8
       '@types/uglify-js': 3.13.1
       '@types/webpack-sources': 3.2.0
@@ -10660,7 +10666,7 @@ packages:
       vue-template-compiler:
         optional: true
     dependencies:
-      '@babel/code-frame': 7.10.4
+      '@babel/code-frame': 7.22.10
       chalk: 2.4.2
       eslint: 7.32.0
       micromatch: 3.1.10
@@ -12867,11 +12873,9 @@ packages:
 
   /minecraft-assets@1.9.1:
     resolution: {integrity: sha512-vYKN5fhMilPafH0CnmYQBCP8zW0Fn3FVvPM25w7HC2PiXZQsP/p3Yl5QdCKjgqTk1LddNdmrw4notNoE6exVRQ==}
-    dev: true
 
   /minecraft-data@3.42.1:
     resolution: {integrity: sha512-Ivxu3s1CNnO1sa1v2tZ6xnrgDhU81BfdVy1cBz2cuxP4BhWgtGcHiXZsmq2+Y/LenBsBA6Ui+Kyi1LrAjAhofg==}
-    dev: true
 
   /mineflayer-web-inventory@1.8.4:
     resolution: {integrity: sha512-km9VcxdQvGR8YaB6zETXjdbtVANnRZR4UUVm35cvCZWu+ib3ZM43+6COLFOjnh4Czw8nzBSOxhosp3jGujuuEg==}
