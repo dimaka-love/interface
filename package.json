@@ -5,7 +5,7 @@
     "author": "Vitaly Turovsky <vital2580@icloud.com>",
     "license": "MIT",
     "scripts": {
-        "build": "tsc -p tsconfig.build.json && node esbuild.mjs",
+        "build": "node esbuild.mjs",
         "build-stencil": "stencil build --docs",
         "start-stencil": "stencil build --dev --watch --serve",
         "test-stencil": "stencil test --spec --e2e",
