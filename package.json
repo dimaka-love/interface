@@ -15,8 +15,7 @@
         "storybook": "start-storybook -p 6006",
         "build-preview": "vite build",
         "lint": "eslint \"src/**/*.{tsx,ts}\"",
-        "prepareBuild": "svgr src/react/low-level/components/GameHUD/TouchControls --typescript --out-dir src/react/low-level/components/GameHUD/TouchControls/svgr",
-        "build-next": "pnpm prepareBuild && tsc -p tsconfig.prod.json --watch"
+        "prepareBuild": "svgr src/react/low-level/components/GameHUD/TouchControls --typescript --out-dir src/react/low-level/components/GameHUD/TouchControls/svgr"
     },
     "main": "build/index.js",
     "files": [
