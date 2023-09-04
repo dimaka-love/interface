@@ -128,7 +128,7 @@ export const RightTouchArea: React.FC<ComponentProps> = () => {
     const isFlying = useInterfaceState(state => state.isFlying)
 
     return (
-        <TouchMovementArea templateAreas={['u .', 'c .', 'd .']}>
+        <TouchMovementArea templateAreas={isFlying ? ['u .', 'c .', 'd .'] : ['c .', 'd .']}>
             {isFlying ? (
                 rightControlsConfig.map(([label, rotate, action]) => (
                     <MovementButton
@@ -150,19 +150,34 @@ export const RightTouchArea: React.FC<ComponentProps> = () => {
                     />
                 ))
             ) : (
-                <MovementButton
-                    action={['y', 1]}
-                    DivProps={{
-                        className: css`
-                            grid-area: c;
-                            height: 100%;
-                        `,
-                    }}
-                    Image={{
-                        type: 'bundled',
-                        src: 'circle',
-                    }}
-                />
+                <>
+                    <MovementButton
+                        action={['y', 1]}
+                        DivProps={{
+                            className: css`
+                                grid-area: c;
+                                height: 100%;
+                            `,
+                        }}
+                        Image={{
+                            type: 'bundled',
+                            src: 'circle',
+                        }}
+                    />
+                    <MovementButton
+                        action={['y', -1]}
+                        DivProps={{
+                            className: css`
+                                grid-area: d;
+                                height: 100%;
+                            `,
+                        }}
+                        Image={{
+                            type: 'bundled',
+                            src: 'circle',
+                        }}
+                    />
+                </>
             )}
         </TouchMovementArea>
     )
