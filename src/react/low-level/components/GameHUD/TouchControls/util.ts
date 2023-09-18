@@ -64,10 +64,10 @@ export const useFixedPointerEvents = (props: HookParams): [React.ComponentProps<
             onPointerCancel: e => toggleIsTouching(false, e),
             // for tablets on windows
             onContextMenu: e => e.preventDefault(),
-            onTouchMove: e => e.stopPropagation(),
-            onTouchStart: e => e.stopPropagation(),
-            onTouchEnd: e => e.stopPropagation(),
-            onTouchCancel: e => e.stopPropagation(),
+            // onTouchMove: e => e.stopPropagation(),
+            // onTouchStart: e => e.stopPropagation(),
+            // onTouchEnd: e => e.stopPropagation(),
+            // onTouchCancel: e => e.stopPropagation(),
         },
         touching,
     ]
